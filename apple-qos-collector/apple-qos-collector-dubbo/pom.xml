@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>apple-qos-collector</artifactId>
+		<groupId>com.appleframework.qos</groupId>
+		<version>0.0.2-SNAPSHOT</version>
+	</parent>
+	<artifactId>apple-qos-collector-dubbo</artifactId>
+	<name>apple-qos-collector-dubbo</name>
+	<url>http://mvnrepo.appleframework.com</url>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.appleframework.qos</groupId>
+			<artifactId>apple-qos-collector-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+		</dependency>
+	</dependencies>
+</project>
