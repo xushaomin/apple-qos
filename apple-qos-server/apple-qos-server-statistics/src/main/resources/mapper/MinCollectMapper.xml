@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.appleframework.qos.server.statistics.dao.MinCollectDao">
+	<resultMap id="baseResultMap" type="com.appleframework.qos.server.core.entity.MinCollect">
+		<id column="id" property="id" jdbcType="BIGINT" />
+
+		<result column="provider_app_id" property="providerAppId" jdbcType="BIGINT" />
+		<result column="provider_app_name" property="providerAppName" jdbcType="VARCHAR" />
+		<result column="provider_node_id" property="providerNodeId" jdbcType="BIGINT" />
+		<result column="provider_addr" property="providerAddr" jdbcType="VARCHAR" />
+		
+		<result column="consumer_app_id" property="consumerAppId" jdbcType="BIGINT" />
+		<result column="consumer_app_name" property="consumerAppName" jdbcType="VARCHAR" />
+		<result column="consumer_node_id" property="consumerNodeId" jdbcType="BIGINT" />
+		<result column="consumer_addr" property="consumerAddr" jdbcType="VARCHAR" />
+		
+		<result column="method" property="method" jdbcType="VARCHAR" />
+		<result column="service" property="service" jdbcType="VARCHAR" />
+		
+		<result column="elapsed" property="elapsed" jdbcType="INTEGER" />
+		<result column="success" property="success" jdbcType="INTEGER" />
+		<result column="failure" property="failure" jdbcType="INTEGER" />
+
+		<result column="max_elapsed" property="maxElapsed" jdbcType="INTEGER" />
+		<result column="avg_elapsed" property="avgElapsed" jdbcType="INTEGER" />
+		
+		<result column="error_code" property="errorCode" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="collect_time" property="collectTime" jdbcType="BIGINT" />
+		<result column="collect_date" property="collectDate" jdbcType="TIMESTAMP" />
+		
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	
+	</resultMap>
+	
+	<sql id="baseColumnList">
+	    	id,
+			provider_app_id,
+	 		provider_app_name,
+	 		provider_node_id,
+	 		provider_addr,
+
+			consumer_app_id,
+			consumer_app_name,
+			consumer_node_id,
+			consumer_addr,
+	
+			type,
+			method,
+			service,
+			
+			elapsed,
+			success,
+			failure,
+			max_elapsed,
+			avg_elapsed,
+			error_code,
+			
+			collect_time,
+			collect_date,
+			create_time,
+			update_time
+	</sql>
+	
+	<select id="findAppByDate" resultMap="baseResultMap" parameterType="java.util.Date">
+		select distinct provider_app_id, consumer_app_id, provider_app_name, consumer_app_name
+		from qos.min_collect where collect_date = #{collectDate, jdbcType=TIMESTAMP}; 
+	</select>
+	
+	<select id="findCodeByDate" resultMap="baseResultMap" parameterType="java.util.Date">
+		select distinct provider_app_id, consumer_app_id, provider_app_name, consumer_app_name, error_code
+		from qos.min_collect where collect_date = #{collectDate, jdbcType=TIMESTAMP};
+	</select>
+	
+	<select id="findNodeByDate" resultMap="baseResultMap" parameterType="java.util.Date">
+		select distinct provider_app_id, consumer_app_id, provider_app_name, consumer_app_name, provider_node_id, provider_addr
+		from qos.min_collect where collect_date = #{collectDate, jdbcType=TIMESTAMP};
+	</select>
+	
+	<select id="findMethodByDate" resultMap="baseResultMap" parameterType="java.util.Date">
+		select distinct service, method, provider_app_id, consumer_app_id, provider_app_name, consumer_app_name
+		from qos.min_collect where collect_date = #{collectDate, jdbcType=TIMESTAMP}
+		and method is not null and method != 'null'
+	</select>
+	
+	
+	<select id="sumSuccessByApp" resultType="com.appleframework.qos.server.statistics.model.DaySumApp" 
+		parameterType="com.appleframework.orm.mybatis.query.MapQuery">
+		select sum(success) as success, sum(elapsed) as elapsed, max(max_elapsed) as maxElapsed
+		from qos.min_collect
+		where success > 0 and consumer_app_id = ${consumerAppId} and provider_app_id = ${providerAppId} 
+		and collect_date = #{collectDate, jdbcType=TIMESTAMP};
+	</select>
+	
+	<select id="sumFailureByApp" resultType="com.appleframework.qos.server.statistics.model.DaySumApp" 
+		parameterType="com.appleframework.orm.mybatis.query.MapQuery">
+		select sum(failure) as failure, sum(elapsed) as elapsed, max(max_elapsed) as maxElapsed
+		from qos.min_collect
+		where failure > 0 and consumer_app_id = ${consumerAppId} and provider_app_id = ${providerAppId} 
+		and collect_date = #{collectDate, jdbcType=TIMESTAMP};
+	</select>
+	
+	<select id="sumCodeByApp" resultType="com.appleframework.qos.server.statistics.model.DaySumCode" 
+		parameterType="com.appleframework.orm.mybatis.query.MapQuery">
+		select sum(success) as success, sum(failure) as failure
+		from qos.min_collect
+		where error_code = '${errorCode}' 
+		and consumer_app_id = ${consumerAppId} and provider_app_id = ${providerAppId}
+		and collect_date = #{collectDate, jdbcType=TIMESTAMP};;
+	</select>
+	
+	<select id="sumNodeByApp" resultType="com.appleframework.qos.server.statistics.model.DaySumNode" 
+		parameterType="com.appleframework.orm.mybatis.query.MapQuery">
+		select sum(success) as success, sum(failure) as failure
+		from qos.min_collect
+		where provider_node_id = ${providerNodeId} 
+		and consumer_app_id = ${consumerAppId} and provider_app_id = ${providerAppId}
+		and collect_date = #{collectDate, jdbcType=TIMESTAMP};
+	</select>
+	
+	
+	<select id="sumSuccessByMethod" resultType="com.appleframework.qos.server.statistics.model.DaySumMethod" 
+		parameterType="com.appleframework.orm.mybatis.query.MapQuery">
+		select 
+			sum(success) as success, sum(elapsed) as elapsed, max(max_elapsed) as maxElapsed
+		from 
+			qos.min_collect
+		where
+		 	consumer_app_id = ${consumerAppId} and provider_app_id = ${providerAppId}
+			and success > 0
+			and service = '${service}' and method = '${method}'
+			and collect_date = #{collectDate, jdbcType=TIMESTAMP};
+	</select>
+	
+	<select id="sumFailureByMethod" resultType="com.appleframework.qos.server.statistics.model.DaySumMethod" 
+		parameterType="com.appleframework.orm.mybatis.query.MapQuery">
+		select 
+			sum(failure) as failure, sum(elapsed) as elapsed, max(max_elapsed) as maxElapsed
+		from 
+			qos.min_collect
+		where 
+			consumer_app_id = ${consumerAppId} and provider_app_id = ${providerAppId}
+			and failure > 0
+			and service = '${service}' and method = '${method}'
+			and collect_date = #{collectDate, jdbcType=TIMESTAMP};
+	</select>
+	
+</mapper>

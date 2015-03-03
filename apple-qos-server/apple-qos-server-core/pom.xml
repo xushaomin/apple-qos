@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>apple-qos-server</artifactId>
+		<groupId>com.appleframework.qos</groupId>
+		<version>0.0.2-SNAPSHOT</version>
+	</parent>
+	<artifactId>apple-qos-server-core</artifactId>
+	<name>apple-qos-server-core</name>
+	<url>http://mvnrepo.appleframework.com</url>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.appleframework.qos.server.monitor.dao.MinCollectDao">
+	<resultMap id="baseResultMap" type="com.appleframework.qos.server.core.entity.MinCollect">
+		<id column="id" property="id" jdbcType="BIGINT" />
+
+		<result column="provider_app_id" property="providerAppId" jdbcType="BIGINT" />
+		<result column="provider_app_name" property="providerAppName" jdbcType="VARCHAR" />
+		<result column="provider_node_id" property="providerNodeId" jdbcType="BIGINT" />
+		<result column="provider_addr" property="providerAddr" jdbcType="VARCHAR" />
+		
+		<result column="consumer_app_id" property="consumerAppId" jdbcType="BIGINT" />
+		<result column="consumer_app_name" property="consumerAppName" jdbcType="VARCHAR" />
+		<result column="consumer_node_id" property="consumerNodeId" jdbcType="BIGINT" />
+		<result column="consumer_addr" property="consumerAddr" jdbcType="VARCHAR" />
+		
+		<result column="method" property="method" jdbcType="VARCHAR" />
+		<result column="service" property="service" jdbcType="VARCHAR" />
+		
+		<result column="elapsed" property="elapsed" jdbcType="INTEGER" />
+		<result column="success" property="success" jdbcType="INTEGER" />
+		<result column="failure" property="failure" jdbcType="INTEGER" />
+
+		<result column="max_elapsed" property="maxElapsed" jdbcType="INTEGER" />
+		<result column="avg_elapsed" property="avgElapsed" jdbcType="INTEGER" />
+		
+		<result column="error_code" property="errorCode" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="collect_time" property="collectTime" jdbcType="BIGINT" />
+		<result column="collect_date" property="collectDate" jdbcType="TIMESTAMP" />
+		
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	
+	</resultMap>
+	
+	<!-- 添加统计历史记录 -->
+	<insert id="insert" parameterType="com.appleframework.qos.server.core.entity.MinCollect">
+		insert into qos.min_collect (
+			
+			provider_app_id,
+	 		provider_app_name,
+	 		provider_node_id,
+	 		provider_addr,
+
+			consumer_app_id,
+			consumer_app_name,
+			consumer_node_id,
+			consumer_addr,
+	
+			type,
+			method,
+			service,
+			
+			elapsed,
+			success,
+			failure,
+			max_elapsed,
+			avg_elapsed,
+			error_code,
+			
+			collect_time,
+			collect_date,
+			create_time
+		)
+		values (
+			
+			#{providerAppId, jdbcType=BIGINT},
+			#{providerAppName, jdbcType=VARCHAR},
+			#{providerNodeId, jdbcType=BIGINT},
+			#{providerAddr, jdbcType=VARCHAR},
+		
+			#{consumerAppId, jdbcType=BIGINT},
+			#{consumerAppName, jdbcType=VARCHAR},
+			#{consumerNodeId, jdbcType=BIGINT},
+			#{consumerAddr, jdbcType=VARCHAR},
+	
+			#{type, jdbcType=INTEGER},
+			#{method, jdbcType=VARCHAR},
+			#{service, jdbcType=VARCHAR},
+			
+			${elapsed},
+			${success},
+			${failure},
+			${maxElapsed},
+			${avgElapsed},
+			
+			#{errorCode, jdbcType=VARCHAR},
+			${collectTime},
+			#{collectDate,jdbcType=TIMESTAMP},
+			#{createTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	
+	
+	<update id="createTable">
+        CREATE TABLE IF NOT EXISTS qos.min_collect (
+			  id bigint(20) NOT NULL AUTO_INCREMENT,
+			  collect_time bigint(20) DEFAULT NULL COMMENT '采集时间',
+			  collect_date date DEFAULT NULL COMMENT '采集日期',
+			  service varchar(255) DEFAULT NULL COMMENT '接口名称(服务名称)',
+			  method varchar(255) DEFAULT NULL COMMENT '方法名称',
+			  type tinyint(3) DEFAULT NULL COMMENT '类型 =1提供方 =2消费方 =3本地',
+			  consumer_app_id bigint(20) DEFAULT NULL COMMENT '服务消费方应用ID',
+			  consumer_app_name varchar(64) DEFAULT NULL COMMENT '服务消费方名称',
+			  consumer_node_id bigint(20) DEFAULT NULL COMMENT '服务消费方节点ID',
+			  consumer_addr varchar(255) DEFAULT NULL COMMENT '服务消费方地址',
+			  provider_app_id bigint(20) DEFAULT NULL COMMENT '服务提供方应用ID',
+			  provider_app_name varchar(64) DEFAULT NULL COMMENT '服务提供方名称',
+			  provider_node_id bigint(20) DEFAULT NULL COMMENT '服务提供方节点ID',
+			  provider_addr varchar(255) DEFAULT NULL COMMENT '服务提供方地址',
+			  elapsed bigint(20) DEFAULT NULL COMMENT '调用成功总耗时',
+			  failure bigint(20) DEFAULT NULL COMMENT '调用失败总次数',
+			  success bigint(20) DEFAULT NULL COMMENT '调用成功总次数',
+			  max_elapsed bigint(20) DEFAULT NULL COMMENT '调用最大耗时',
+			  avg_elapsed bigint(20) DEFAULT NULL COMMENT '调用平均耗时',
+			  error_code varchar(64) DEFAULT NULL COMMENT '返回码',
+			  create_time timestamp NULL DEFAULT NULL COMMENT '信息入库时间',
+			  update_time timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '信息更新时间',
+			  PRIMARY KEY (id),
+			  KEY app_id (consumer_app_id,provider_app_id) COMMENT '服务消费维度',
+			  KEY error_code (error_code) COMMENT '返回码维度',
+			  KEY service (service) COMMENT '服务名称'
+		) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+	</update>
+	
+</mapper>

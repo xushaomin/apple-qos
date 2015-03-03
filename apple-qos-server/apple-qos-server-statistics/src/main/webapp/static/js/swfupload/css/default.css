@@ -1,0 +1,59 @@
+
+div.flash {
+    border-color: #D9E4FF;
+    margin: 10px 5px;
+    width: 410px;
+}
+div.fieldset {
+    border: 1px solid #AFE14C;
+    margin: 10px 0;
+    padding: 20px 10px;
+}
+.progressWrapper {
+    overflow: hidden;
+    width: 400px;
+}
+.green {
+    background-color: #EBFFEB;
+    border: 1px solid #DDF0DD;
+}
+.progressContainer {
+    background-color: #F7F7F7;
+    border: 1px solid #E8E8E8;
+    margin: 5px;
+    overflow: hidden;
+    padding: 4px;
+}a.progressCancel {
+    background-image: url("../images/cancelbutton.gif");
+    background-position: -14px 0;
+    background-repeat: no-repeat;
+    display: block;
+    float: right;
+    font-size: 0;
+    height: 14px;
+    width: 14px;
+}
+.progressName {
+    color: #555555;
+    font-size: 10pt;
+    font-weight: 700;
+    /*height: 14px;*/
+    overflow: hidden;
+    text-align: left;
+    white-space: nowrap;
+    width: 323px;
+}
+.progressBarStatus {
+    font-family: Arial;
+    font-size: 12pt;
+    margin-top: 2px;
+    text-align: left;
+    white-space: nowrap;
+    width: 337px;
+}.progressBarInProgress, .progressBarComplete, .progressBarError {
+    background-color: #0000FF;
+    font-size: 0;
+    height: 2px;
+    margin-top: 2px;
+    width: 0;
+}

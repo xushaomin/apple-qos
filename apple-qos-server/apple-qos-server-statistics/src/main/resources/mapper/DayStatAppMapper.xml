@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.appleframework.qos.server.statistics.dao.DayStatAppDao">
+	<resultMap id="baseResultMap" type="com.appleframework.qos.server.core.entity.DayStatApp">
+		<id column="id" property="id" jdbcType="BIGINT" />
+
+		<result column="provider_app_id" property="providerAppId" jdbcType="BIGINT" />
+		<result column="provider_app_name" property="providerAppName" jdbcType="VARCHAR" />
+		
+		<result column="consumer_app_id" property="consumerAppId" jdbcType="BIGINT" />
+		<result column="consumer_app_name" property="consumerAppName" jdbcType="VARCHAR" />
+				
+		<result column="stat_date" property="statDate" jdbcType="TIMESTAMP" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+				
+		<result column="fail_sum_number" property="failSumNumber" jdbcType="BIGINT" />
+		<result column="fail_avg_elapsed" property="failAvgElapsed" jdbcType="BIGINT" />
+		<result column="fail_max_elapsed" property="succMaxElapsed" jdbcType="BIGINT" />
+		
+		<result column="succ_sum_number" property="succSumNumber" jdbcType="BIGINT" />
+		<result column="succ_avg_elapsed" property="succAvgElapsed" jdbcType="BIGINT" />
+		<result column="succ_max_elapsed" property="succMaxElapsed" jdbcType="BIGINT" />
+		
+		<result column="total_sum_number" property="totalSumNumber" jdbcType="BIGINT" />
+		<result column="total_avg_elapsed" property="totalAvgElapsed" jdbcType="BIGINT" />
+		<result column="total_succ_per" property="totalSuccPer" jdbcType="DOUBLE" />
+	
+	</resultMap>
+	
+	<sql id="baseColumnList">
+		id, 
+		
+		provider_app_id, provider_app_name, 
+		consumer_app_id, consumer_app_name, 
+				
+		stat_date, create_time, update_time, 
+		
+		fail_sum_number, fail_avg_elapsed, fail_max_elapsed,
+		succ_sum_number, succ_avg_elapsed, succ_max_elapsed,
+		
+		total_sum_number, total_avg_elapsed, total_succ_per
+	</sql>
+	
+	<insert id="insert" parameterType="com.appleframework.qos.server.core.entity.DayStatApp">
+		insert into stat_day_app (
+			provider_app_id,
+			provider_app_name,
+			consumer_app_id,
+			consumer_app_name,
+						
+			fail_sum_number,
+			fail_avg_elapsed,
+			fail_max_elapsed,
+			succ_sum_number,
+			succ_avg_elapsed,
+			succ_max_elapsed,
+			total_sum_number,
+			total_avg_elapsed,
+			total_succ_per,
+			
+			stat_date,
+			create_time
+		)
+		values (
+			#{providerAppId, jdbcType=BIGINT},
+			#{providerAppName, jdbcType=VARCHAR},
+			#{consumerAppId, jdbcType=BIGINT},
+			#{consumerAppName, jdbcType=VARCHAR},
+			
+			#{failSumNumber, jdbcType=BIGINT},
+			#{failAvgElapsed, jdbcType=BIGINT},
+			#{failMaxElapsed, jdbcType=BIGINT},
+			#{succSumNumber, jdbcType=BIGINT},
+			#{succAvgElapsed, jdbcType=BIGINT},
+			#{succMaxElapsed, jdbcType=BIGINT},
+			#{totalSumNumber, jdbcType=BIGINT},
+			#{totalAvgElapsed, jdbcType=BIGINT},
+			#{totalSuccPer, jdbcType=DOUBLE},
+			
+			#{statDate, jdbcType=TIMESTAMP},
+			#{createTime, jdbcType=TIMESTAMP}
+			
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.appleframework.qos.server.core.entity.DayStatApp">
+		update
+			stat_day_app
+		set 
+			fail_sum_number = ${failSumNumber},
+			fail_avg_elapsed  = ${failAvgElapsed},
+			fail_max_elapsed = ${failMaxElapsed},
+			succ_sum_number = ${succSumNumber},
+			succ_avg_elapsed = ${succAvgElapsed},
+			succ_max_elapsed = ${succMaxElapsed},
+			total_sum_number = ${totalSumNumber},
+			total_avg_elapsed = ${totalAvgElapsed},
+			total_succ_per = ${totalSuccPer},
+			update_time = #{updateTime, jdbcType=TIMESTAMP}
+		where 
+			id = #{id, jdbcType=BIGINT}
+	</update>	
+	
+	<select id="getByDate" resultMap="baseResultMap" parameterType="map">
+		select 
+			<include refid="baseColumnList" /> 
+		from 
+			qos.stat_day_app
+		where 
+			provider_app_id = ${providerAppId} and 
+			consumer_app_id = ${consumerAppId} and 
+			stat_date = #{statDate, jdbcType=TIMESTAMP} limit 1
+	</select>
+	
+	<!-- 
+	<select id="findByAppAndDay" resultMap="baseResultMap" parameterType="map">
+		select 
+			<include refid="baseColumnList" /> 
+		from 
+			glsx_gsc_${month}.glsx_stat_day_app_${month}
+		where 1=1 
+			<if test="startDate!=null">  
+            	and stat_date &gt;= #{startDate, jdbcType=TIMESTAMP} 
+         	</if>
+         	<if test="endDate!=null">  
+            	and stat_date &lt;= #{endDate, jdbcType=TIMESTAMP} 
+         	</if>
+         	
+         	<if test="consumerAppName!=null">  
+            	and consumer_app_name like '%${consumerAppName}%' 
+         	</if>
+         	<if test="providerAppName!=null">  
+            	and provider_app_name like '%${providerAppName}%' 
+         	</if>
+         	order by stat_date desc, total_succ_per asc
+	</select>
+	
+	<select id="findPageByAppAndBetweenDay" resultMap="baseResultMap" parameterType="com.appleframework.orm.mybatis.query.PageQuery">
+		select 
+			<include refid="baseColumnList" /> 
+		from 
+			glsx_gsc_${queryParams.month}.glsx_stat_day_app_${queryParams.month}
+		where 1=1 
+			<if test="queryParams.startDate!=null">  
+            	and stat_date &gt;= #{queryParams.startDate, jdbcType=TIMESTAMP} 
+         	</if>
+         	<if test="queryParams.endDate!=null">  
+            	and stat_date &lt;= #{queryParams.endDate, jdbcType=TIMESTAMP} 
+         	</if>
+         	
+         	<if test="queryParams.consumerAppName!=null">  
+            	and consumer_app_name like '%${queryParams.consumerAppName}%' 
+         	</if>
+         	<if test="queryParams.providerAppName!=null">  
+            	and provider_app_name like '%${queryParams.providerAppName}%' 
+         	</if>
+         	order by stat_date desc, total_succ_per asc
+	</select>
+	
+	<select id="findPageByAppAndDay" resultMap="baseResultMap" parameterType="com.appleframework.orm.mybatis.query.PageQuery">
+		select 
+			<include refid="baseColumnList" /> 
+		from 
+			glsx_gsc_${queryParams.month}.glsx_stat_day_app_${queryParams.month}
+		where
+			stat_date = #{queryParams.startDate, jdbcType=TIMESTAMP} 
+         	<if test="queryParams.consumerAppName!=null">  
+            	and consumer_app_name like '%${queryParams.consumerAppName}%' 
+         	</if>
+         	<if test="queryParams.providerAppName!=null">  
+            	and provider_app_name like '%${queryParams.providerAppName}%' 
+         	</if>
+         	order by total_succ_per asc, fail_sum_number desc, fail_avg_elapsed desc
+	</select>
+	 -->
+	 
+	<update id="createTable">
+		CREATE TABLE IF NOT EXISTS qos.stat_day_app (
+			id bigint(20) NOT NULL AUTO_INCREMENT,
+			stat_date date DEFAULT NULL COMMENT '统计时间',
+		  	provider_app_id bigint(11) DEFAULT NULL COMMENT '服务提供方应用ID',
+			provider_app_name varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '服务提供方名称',
+			consumer_app_id bigint(11) DEFAULT NULL COMMENT '服务消费方应用ID',
+		  	consumer_app_name varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '服务消费方名称',
+			fail_sum_number bigint(20) DEFAULT NULL COMMENT '调用失败总数',
+			fail_avg_elapsed bigint(20) DEFAULT NULL COMMENT '调用失败平均时间',
+		 	fail_max_elapsed bigint(20) DEFAULT NULL COMMENT '调用失败最大耗时',
+			succ_sum_number bigint(20) DEFAULT NULL COMMENT '调用成功总数',
+			succ_avg_elapsed bigint(20) DEFAULT NULL COMMENT '调用成功平均耗时',
+			succ_max_elapsed bigint(20) DEFAULT NULL COMMENT '调用成功最大耗时',
+			total_sum_number bigint(20) DEFAULT NULL COMMENT '调用总次数',
+			total_avg_elapsed bigint(20) DEFAULT NULL COMMENT '调用总平均耗时',
+			total_succ_per double DEFAULT NULL COMMENT '调用成功比率',
+			create_time timestamp NULL DEFAULT NULL COMMENT '信息入库时间',
+			update_time timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '信息更新时间',
+			PRIMARY KEY (id),
+			KEY app_id (provider_app_id,consumer_app_id)
+		) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;
+	</update>
+	   
+</mapper>

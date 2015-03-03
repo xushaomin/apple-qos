@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.appleframework.qos.server.statistics.dao.DayStatNodeDao">
+	<resultMap id="baseResultMap" type="com.appleframework.qos.server.core.entity.DayStatNode">
+		<id column="id" property="id" jdbcType="BIGINT" />
+
+		<result column="provider_app_id" property="providerAppId" jdbcType="BIGINT" />
+		<result column="provider_app_name" property="providerAppName" jdbcType="VARCHAR" />
+		
+		<result column="consumer_app_id" property="consumerAppId" jdbcType="BIGINT" />
+		<result column="consumer_app_name" property="consumerAppName" jdbcType="VARCHAR" />
+				
+		<result column="stat_date" property="statDate" jdbcType="TIMESTAMP" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+				
+		<result column="total_sum_number" property="totalSumNumber" jdbcType="BIGINT" />
+		<result column="provider_node_id" property="providerNodeId" jdbcType="BIGINT" />
+		<result column="provider_node_ip" property="providerNodeIp" jdbcType="VARCHAR" />
+			
+	</resultMap>
+	
+	<sql id="baseColumnList">
+		id, 
+		
+		provider_app_id, provider_app_name, 
+		consumer_app_id, consumer_app_name, 
+				
+		stat_date, create_time, update_time, 
+				
+		total_sum_number, provider_node_id, provider_node_ip
+	</sql>
+	
+	<insert id="insert" parameterType="com.appleframework.qos.server.core.entity.DayStatNode">
+		insert into qos.stat_day_node (
+			provider_app_id,
+			provider_app_name,
+			consumer_app_id,
+			consumer_app_name,
+						
+			total_sum_number,
+			provider_node_id,
+			provider_node_ip,
+			
+			stat_date,
+			create_time
+		)
+		values (
+			#{providerAppId, jdbcType=INTEGER},
+			#{providerAppName, jdbcType=VARCHAR},
+			#{consumerAppId, jdbcType=INTEGER},
+			#{consumerAppName, jdbcType=VARCHAR},
+			
+			#{totalSumNumber, jdbcType=BIGINT},
+			#{providerNodeId, jdbcType=INTEGER},
+			#{providerNodeIp, jdbcType=VARCHAR},
+			
+			#{statDate, jdbcType=TIMESTAMP},
+			#{createTime, jdbcType=TIMESTAMP}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.appleframework.qos.server.core.entity.DayStatNode">
+		update 
+			qos.stat_day_node
+		set 
+			total_sum_number = ${totalSumNumber},
+			update_time = #{updateTime, jdbcType=TIMESTAMP}
+		where 
+			id = #{id, jdbcType=BIGINT}
+	</update>	
+	
+	<select id="getByDate" resultMap="baseResultMap" 
+		parameterType="com.appleframework.orm.mybatis.query.MapQuery">
+		select 
+			<include refid="baseColumnList" />
+		from 
+			qos.stat_day_node
+		where 
+			provider_app_id = ${providerAppId} and 
+			consumer_app_id = ${consumerAppId} and 
+			provider_node_id = ${providerNodeId} and 
+			stat_date = #{statDate, jdbcType=TIMESTAMP} limit 1
+	</select>
+	
+	<!-- 
+	<select id="findByAppAndDay" resultMap="baseResultMap" parameterType="map">
+		select 
+			<include refid="baseColumnList" /> 
+		from 
+			qos.stat_day_node
+		where 1=1 
+			<if test="startDate!=null">  
+            	and stat_date &gt;= #{startDate, jdbcType=TIMESTAMP} 
+         	</if>
+         	<if test="endDate!=null">  
+            	and stat_date &lt;= #{endDate, jdbcType=TIMESTAMP} 
+         	</if>
+         	
+         	<if test="consumerAppName!=null">  
+            	and consumer_app_name like '%${consumerAppName}%' 
+         	</if>
+         	<if test="providerAppName!=null">  
+            	and provider_app_name like '%${providerAppName}%' 
+         	</if>
+         	order by stat_date desc, total_sum_number desc
+	</select>
+	
+	<select id="findPageByAppAndDay" resultMap="baseResultMap" parameterType="com.glsx.gsc.statistics.page.Query">
+		select 
+			<include refid="baseColumnList" /> 
+		from 
+			glsx_gsc_${queryParams.month}.glsx_stat_day_node_${queryParams.month}
+		where 1=1 
+			<if test="queryParams.startDate!=null">  
+            	and stat_date &gt;= #{queryParams.startDate, jdbcType=TIMESTAMP} 
+         	</if>
+         	<if test="queryParams.endDate!=null">  
+            	and stat_date &lt;= #{queryParams.endDate, jdbcType=TIMESTAMP} 
+         	</if>
+         	
+         	<if test="queryParams.consumerAppName!=null">  
+            	and consumer_app_name like '%${queryParams.consumerAppName}%' 
+         	</if>
+         	<if test="queryParams.providerAppName!=null">  
+            	and provider_app_name like '%${queryParams.providerAppName}%' 
+         	</if>
+         	order by stat_date desc, total_sum_number desc
+	</select>
+	 -->
+	 
+	 <update id="createTable">
+		CREATE TABLE IF NOT EXISTS qos.stat_day_node (
+			  id int(11) NOT NULL AUTO_INCREMENT,
+			  stat_date date DEFAULT NULL COMMENT '统计时间',
+			  provider_app_id int(11) DEFAULT NULL COMMENT '服务提供方应用ID',
+			  provider_app_name varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '服务提供方名称',
+			  consumer_app_id int(11) DEFAULT NULL COMMENT '服务消费方应用ID',
+			  consumer_app_name varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '服务消费方名称',
+			  total_sum_number bigint(20) DEFAULT NULL COMMENT '调用总次数',
+			  provider_node_ip varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '提供方节点IP',
+			  provider_node_id int(11) DEFAULT NULL COMMENT '提供方节点ID',
+			  create_time timestamp NULL DEFAULT NULL COMMENT '信息入库时间',
+			  update_time timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '信息更新时间',
+			  PRIMARY KEY (id)
+		) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;
+	</update>
+		   
+</mapper>

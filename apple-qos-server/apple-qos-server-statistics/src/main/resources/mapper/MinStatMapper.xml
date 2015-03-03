@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.appleframework.qos.server.statistics.dao.MinStatDao">
+	<resultMap id="baseResultMap" type="com.appleframework.qos.server.core.entity.MinStat">
+		<id column="id" property="id" jdbcType="BIGINT" />
+
+		<result column="provider_app_id" property="providerAppId" jdbcType="BIGINT" />
+		<result column="provider_app_name" property="providerAppName" jdbcType="VARCHAR" />
+		
+		<result column="consumer_app_id" property="consumerAppId" jdbcType="BIGINT" />
+		<result column="consumer_app_name" property="consumerAppName" jdbcType="VARCHAR" />
+		
+		<result column="method" property="method" jdbcType="VARCHAR" />
+		<result column="service" property="service" jdbcType="VARCHAR" />
+		
+		<result column="stat_time" property="statTime" jdbcType="BIGINT" />
+		<result column="stat_date" property="statDate" jdbcType="TIMESTAMP" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+				
+		<result column="fail_sum_number" property="failSumNumber" jdbcType="BIGINT" />
+		<result column="fail_avg_elapsed" property="failAvgElapsed" jdbcType="BIGINT" />
+		<result column="fail_max_elapsed" property="succMaxElapsed" jdbcType="BIGINT" />
+		
+		<result column="succ_sum_number" property="succSumNumber" jdbcType="BIGINT" />
+		<result column="succ_avg_elapsed" property="succAvgElapsed" jdbcType="BIGINT" />
+		<result column="succ_max_elapsed" property="succMaxElapsed" jdbcType="BIGINT" />
+		
+		<result column="total_sum_number" property="totalSumNumber" jdbcType="BIGINT" />
+		<result column="total_avg_elapsed" property="totalAvgElapsed" jdbcType="BIGINT" />
+		<result column="total_succ_per" property="totalSuccPer" jdbcType="DOUBLE" />
+	
+		<result column="md5" property="md5" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="baseColumnList">
+		id, 
+		
+		provider_app_id, provider_app_name, 
+		consumer_app_id, consumer_app_name, 
+		
+		method, service, 
+		
+		stat_time, stat_date, create_time, update_time, 
+		
+		fail_sum_number, fail_avg_elapsed, fail_max_elapsed,
+		succ_sum_number, succ_avg_elapsed, succ_max_elapsed,
+		
+		total_sum_number, total_avg_elapsed, total_succ_per,
+		
+		md5
+	</sql>
+	
+	<insert id="insert" parameterType="com.appleframework.qos.server.core.entity.MinStat">
+		insert qos.min_stat (
+			provider_app_id,
+			provider_app_name,
+			consumer_app_id,
+			consumer_app_name,
+			
+			method,
+			service,
+			
+			fail_sum_number,
+			fail_avg_elapsed,
+			fail_max_elapsed,
+			succ_sum_number,
+			succ_avg_elapsed,
+			succ_max_elapsed,
+			total_sum_number,
+			total_avg_elapsed,
+			total_succ_per,
+			
+			stat_time,
+			stat_date,
+			create_time,
+			
+			md5
+		)
+		values (
+			${providerAppId},
+			#{providerAppName, jdbcType=VARCHAR},
+			${consumerAppId},
+			#{consumerAppName, jdbcType=VARCHAR},
+			
+			#{method, jdbcType=VARCHAR},
+			#{service, jdbcType=VARCHAR},
+			
+			${failSumNumber},
+			${failAvgElapsed},
+			${failMaxElapsed},
+			${succSumNumber},
+			${succAvgElapsed},
+			${succMaxElapsed},
+			${totalSumNumber},
+			${totalAvgElapsed},
+			${totalSuccPer},
+			
+			${statTime},
+			#{statDate, jdbcType=TIMESTAMP},
+			#{createTime, jdbcType=TIMESTAMP},
+			
+			#{md5, jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<select id="getByMd5" resultMap="baseResultMap" parameterType="map">
+		select
+		<include refid="baseColumnList" />
+		from qos.min_stat
+		where md5 = #{md5,jdbcType=VARCHAR}
+	</select>
+		
+	<update id="update" parameterType="com.appleframework.qos.server.core.entity.MinStat">
+		update 
+			qos.min_stat
+		set 
+			fail_sum_number = ${failSumNumber},
+			fail_avg_elapsed = ${failAvgElapsed},
+			fail_max_elapsed = ${failMaxElapsed},
+			succ_sum_number = ${succSumNumber},
+			succ_avg_elapsed = ${succAvgElapsed},
+			succ_max_elapsed = ${succMaxElapsed},
+			total_sum_number = ${totalSumNumber},
+			total_avg_elapsed = ${totalAvgElapsed},
+			total_succ_per = ${totalSuccPer},
+			
+			update_time = #{updateTime, jdbcType=TIMESTAMP}
+		where 
+			id = #{id, jdbcType=BIGINT}
+	</update>
+	
+	<update id="createTable">
+        CREATE TABLE IF NOT EXISTS qos.min_stat (
+			id bigint(20) NOT NULL AUTO_INCREMENT,
+		  	stat_time bigint(20) DEFAULT NULL COMMENT '采集时间',
+		  	stat_date datetime DEFAULT NULL COMMENT '采集时间',
+		  	service varchar(255) DEFAULT NULL COMMENT '接口名称(服务名称)',
+		  	method varchar(255) DEFAULT NULL COMMENT '方法名称',
+		  	consumer_app_id bigint(20) DEFAULT NULL COMMENT '服务消费方应用ID',
+		  	consumer_app_name varchar(64) DEFAULT NULL COMMENT '服务消费方名称',
+		  	provider_app_id bigint(20) DEFAULT NULL COMMENT '服务提供方应用ID',
+		  	provider_app_name varchar(64) DEFAULT NULL COMMENT '服务提供方名称',
+		  	fail_sum_number bigint(20) DEFAULT NULL COMMENT '调用失败总数',
+		 	fail_avg_elapsed bigint(20) DEFAULT NULL COMMENT '调用失败平均耗时',
+		  	fail_max_elapsed bigint(20) DEFAULT NULL COMMENT '调用失败最大耗时',
+		  	succ_sum_number bigint(20) DEFAULT NULL COMMENT '调用成功总数',
+		  	succ_avg_elapsed bigint(20) DEFAULT NULL COMMENT '调用成功平均耗时',
+		  	succ_max_elapsed bigint(20) DEFAULT NULL COMMENT '调用成功最大耗时',
+		  	total_sum_number bigint(20) DEFAULT NULL COMMENT '调用总次数',
+		  	total_avg_elapsed bigint(20) DEFAULT NULL COMMENT '调用总平均耗时',
+		  	total_succ_per double DEFAULT NULL COMMENT '调用成功比率',
+		  	md5 char(32) DEFAULT NULL COMMENT 'MD5',
+		  	create_time timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '信息入库时间',
+		  	update_time timestamp NULL DEFAULT NULL COMMENT '信息更新时间',
+		  	PRIMARY KEY (id),
+		  	KEY app_id (consumer_app_id,provider_app_id)
+		) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+	</update>
+	   
+</mapper>

@@ -1,0 +1,34 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	
+    <bean id="propertyConfigurer"
+		class="com.appleframework.config.diamond.spring.ExtendedPropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:system.properties</value>
+			</list>
+		</property>
+		<property name="loadDiamond" value="true" />
+	</bean>
+	
+	<bean id="springUtility" class="com.appleframework.qos.server.monitor.utils.SpringUtility" lazy-init="false" />
+	
+	<dubbo:application name="${application.name}" owner="${dubbo.application.owner}" />
+	
+	<dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" />
+	
+	<!-- 
+	<dubbo:protocol name="dubbo" port="${dubbo.protocol.port}" />
+	 -->
+	 
+	<dubbo:reference id="registryService" interface="com.alibaba.dubbo.registry.RegistryService" />
+	
+	<bean id="container"
+		class="com.appleframework.qos.server.monitor.RegistryContainer" init-method="start" destroy-method="stop">
+	</bean>
+		
+</beans>

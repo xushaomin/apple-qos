@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.appleframework.qos.server.monitor.dao.NodeInfoDao">
+	<resultMap id="baseResultMap" type="com.appleframework.qos.server.core.entity.NodeInfo">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		
+		<result column="ip" property="ip" jdbcType="VARCHAR" />
+		<result column="host" property="host" jdbcType="VARCHAR" />
+
+		<result column="state" property="state" jdbcType="INTEGER" />
+		<result column="disorder" property="disorder" jdbcType="INTEGER" />
+		
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />	
+	</resultMap>
+	
+	<sql id="baseColumnList">
+		id, ip, host, state, disorder, create_time, update_time
+	</sql>
+	
+	<insert id="insert" parameterType="com.appleframework.qos.server.core.entity.NodeInfo"
+	    useGeneratedKeys="true" keyProperty="id">
+		insert into qos.node_info (
+			ip,
+			host,
+			state,
+			disorder,
+			create_time,
+			update_time
+		) values (
+			#{ip, jdbcType=VARCHAR},
+			#{host, jdbcType=VARCHAR},
+			#{state, jdbcType=VARCHAR},
+			#{disorder, jdbcType=VARCHAR},
+			#{createTime, jdbcType=TIMESTAMP},
+			#{updateTime, jdbcType=TIMESTAMP}
+		)
+	</insert>
+		
+	<select id="getByIp" resultMap="baseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="baseColumnList" />
+		from qos.node_info
+		where ip = #{ip, jdbcType=VARCHAR}
+	</select>
+		
+	<update id="createTable">
+		CREATE TABLE IF NOT EXISTS qos.node_info (
+		  	id int(11) NOT NULL AUTO_INCREMENT,
+		  	ip varchar(64) DEFAULT NULL COMMENT '服务器IP',
+		  	host varchar(64) DEFAULT NULL COMMENT '服务器HOST',
+		  	model varchar(64) DEFAULT NULL COMMENT '服务器型号',
+		  	remark varchar(255) DEFAULT NULL COMMENT '备注',
+		  	state int(11) DEFAULT NULL COMMENT '状态 0=停用 =1启用 =2删除',
+		 	disorder int(11) DEFAULT NULL COMMENT '排序',
+		  	create_time timestamp NULL DEFAULT NULL COMMENT '创建时间',
+		  	update_time timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+		  	PRIMARY KEY (id)
+		) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;
+	</update>
+	   
+</mapper>

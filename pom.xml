@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.appleframework.qos</groupId>
+	<artifactId>apple-qos</artifactId>
+	<version>0.0.2-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>apple-qos</name>
+	<url>http://mvnrepo.appleframework.com</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.version>0.0.2-SNAPSHOT</project.version>
+		<spring.version>4.0.5.RELEASE</spring.version>
+		<apple.version>0.0.3.RELEASE</apple.version>
+		<config.version>0.1.1.RELEASE</config.version>
+		<jms.version>0.0.3.RELEASE</jms.version>
+		<boot.version>0.1.1.RELEASE</boot.version>
+		<aspectj.version>1.6.8</aspectj.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.8.1</version>
+				<scope>test</scope>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.appleframework</groupId>
+				<artifactId>appleframework-core</artifactId>
+				<version>${apple.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.appleframework</groupId>
+				<artifactId>appleframework-orm</artifactId>
+				<version>${apple.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.appleframework</groupId>
+				<artifactId>appleframework-web</artifactId>
+				<version>${apple.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.appleframework</groupId>
+				<artifactId>appleframework-exception</artifactId>
+				<version>${apple.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.appleframework.config</groupId>
+				<artifactId>apple-config-core</artifactId>
+				<version>${config.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.appleframework.config</groupId>
+				<artifactId>apple-config-diamond</artifactId>
+				<version>${config.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.appleframework.jms</groupId>
+				<artifactId>apple-jms-kafka</artifactId>
+				<version>${jms.version}</version>
+			</dependency>
+		
+			<dependency>
+				<groupId>com.appleframework.boot</groupId>
+				<artifactId>apple-boot-spring</artifactId>
+				<version>${boot.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.appleframework.boot</groupId>
+				<artifactId>apple-boot-jetty</artifactId>
+				<version>${boot.version}</version>
+			</dependency>			
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>dubbo</artifactId>
+				<version>2.5.3</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>1.2.16</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjrt</artifactId>
+				<version>${aspectj.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>${aspectj.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>c3p0</groupId>
+				<artifactId>c3p0</artifactId>
+				<version>0.9.1.2</version>
+			</dependency>
+			
+		</dependencies>
+	</dependencyManagement>
+	<modules>
+		<module>apple-qos-collector</module>
+		<module>apple-qos-server</module>
+	</modules>
+</project>

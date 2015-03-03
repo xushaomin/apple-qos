@@ -1,0 +1,32 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	
+	<bean id="propertyConfigurer"
+		class="com.appleframework.config.diamond.spring.ExtendedPropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:system.properties</value>
+			</list>
+		</property>
+		<property name="loadDiamond" value="true" />
+	</bean>
+		
+	<bean id="agentMonitor" class="com.appleframework.qos.server.agent.AgentMonitor">
+  		<constructor-arg index="0" ref="monitorSendService" />  
+    </bean>
+    
+		
+	<bean id="logFileReadStarter" class="com.appleframework.qos.server.agent.LogFileReadStarter" init-method="init">
+  		<property name="baseFilePath" value="${log.file.path:/work/logs/qos/}" />
+   		<property name="agentMonitor" ref="agentMonitor" /> 		
+    </bean>
+    
+    <!-- 
+   	<bean id="springUtility" class="com.appleframework.core.utils.SpringUtility" lazy-init="false" /> 
+	<bean id="loggingJmxInit" class="com.appleframework.qos.server.agent.JmxInit" init-method="init" />
+	 -->
+</beans>
