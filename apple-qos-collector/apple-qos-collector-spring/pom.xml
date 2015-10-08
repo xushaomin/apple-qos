@@ -6,16 +6,16 @@
 	<parent>
 		<artifactId>apple-qos-collector</artifactId>
 		<groupId>com.appleframework.qos</groupId>
-		<version>0.0.2-SNAPSHOT</version>
+		<version>0.0.4.RELEASE</version>
 	</parent>
 	<artifactId>apple-qos-collector-spring</artifactId>
 	<name>apple-qos-collector-spring</name>
 	<url>http://mvnrepo.appleframework.com</url>
 	
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>4.0.5.RELEASE</spring.version>
 	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>

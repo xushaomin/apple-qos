@@ -38,6 +38,10 @@ public class LoggerInit {
     
     public static String LOG_FILE_GEN_TYPE_KEY = "log.file.gen.type";
     
+    public static String LOG_FILE_GEN_PATH_KEY = "log.file.gen.path";
+    
+    public static String LOG_FILE_GEN_DEFAULT_PATH = "/work/logs/qos";
+    
     public static long logFileGenIntervalTime = 86400000; //日志产生时间间隔 单位毫秒 默认为1天
     
     //一天86400000
@@ -85,10 +89,11 @@ public class LoggerInit {
             // 使缺省的配置生效(Logger, Appender)
             PropertyConfigurator.configure(defaultProperties);
             String date = DateFormatUtils.toString(now, datePattern);
-            String filePath = "/work/logs/qos/" + application + "_" + date + ".log";
-            File logFile = new File("/work/logs/qos/");
+            String logFileGenPath = getLogFileGenPath();
+            String filePath = logFileGenPath + "/" + application + "_" + date + ".log";
+            File logFile = new File(logFileGenPath);
             if(!logFile.exists()) {
-            	logFile.mkdir();
+            	logFile.mkdirs();
             }
             
             setFileAppender(filePath, LOG_NAME_GOS_DATA);
@@ -108,7 +113,7 @@ public class LoggerInit {
         log.warn("成功为" + logName + "添加Appender. 输出路径:" + logPath);
     }
 
-    static private FileAppender getFileAppender(Logger logger) {
+    private static FileAppender getFileAppender(Logger logger) {
         FileAppender fileAppender = null;
         for (Enumeration<?> appenders = logger.getAllAppenders(); 
         		(null == fileAppender) && appenders.hasMoreElements();) {
@@ -119,4 +124,17 @@ public class LoggerInit {
         }
         return fileAppender;
     }
+    
+    private static String getLogFileGenPath() {
+        String path = PropertyConfigurer.getString(LOG_FILE_GEN_PATH_KEY);
+        if(null == path) {
+        	return LOG_FILE_GEN_DEFAULT_PATH;
+        }
+        else {
+        	return path;
+        }
+        
+    }
+    
+    
 }

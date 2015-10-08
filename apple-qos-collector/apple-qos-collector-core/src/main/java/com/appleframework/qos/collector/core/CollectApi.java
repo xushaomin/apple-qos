@@ -138,5 +138,31 @@ public class CollectApi {
 
 		}
 	}
+	
+	public static void collect(String consumerName, String providerName) {
+		try {
+			Date date = new Date();
+			long timestamp = date.getTime();
+
+			if (timestamp - LoggerInit.logFileGenStartTime > LoggerInit.logFileGenIntervalTime) {
+				LoggerInit.initOK = false;
+				LoggerInit.initLogger();
+			}
+			String localHost = NetUtils.getLocalHost();
+			// ---- 服务信息获取 ----
+
+			URL url = new URL(Constants.KEY_COUNT_PROTOCOL, localHost, 0,
+					Constants.KEY_CONSUMER_APP, consumerName,
+					Constants.KEY_PROVIDER_APP, providerName,
+					Constants.KEY_SUCCESS, "1",
+					Constants.KEY_ELAPSED, String.valueOf(0), 
+					Constants.KEY_ERROR_CODE, "0",
+					Constants.KEY_COLLECT_TYPE, String.valueOf(Constants.COLLECT_TYPE_LOCAL),
+					Constants.KEY_TIMESTAMP, DateFormatUtils.toString(date, DateFormatUtils.pattern12));
+			collect(url);
+		} catch (Exception e) {
+
+		}
+	}
     
 }
