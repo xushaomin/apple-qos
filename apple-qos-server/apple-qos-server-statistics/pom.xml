@@ -21,22 +21,22 @@
 
 		<dependency>
 			<groupId>com.appleframework</groupId>
-			<artifactId>appleframework-core</artifactId>
+			<artifactId>apple-core</artifactId>
 		</dependency>
 				
 		<dependency>
 			<groupId>com.appleframework</groupId>
-			<artifactId>appleframework-web</artifactId>
+			<artifactId>apple-web</artifactId>
 		</dependency>
 		
 		<dependency>
 			<groupId>com.appleframework</groupId>
-			<artifactId>appleframework-orm</artifactId>
+			<artifactId>apple-orm</artifactId>
 		</dependency>
 		
 		<dependency>
 			<groupId>com.appleframework</groupId>
-			<artifactId>appleframework-exception</artifactId>
+			<artifactId>apple-exception</artifactId>
 		</dependency>
 		
 		<dependency>
