@@ -42,7 +42,14 @@
 		select
 		<include refid="baseColumnList" />
 		from qos.app_info
-		where code = #{code,jdbcType=VARCHAR}
+		where code = #{code,jdbcType=BIGINT}
+	</select>
+	
+	<select id="get" resultMap="baseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="baseColumnList" />
+		from qos.app_info
+		where id = #{id,jdbcType=VARCHAR}
 	</select>
 		
 	<update id="createTable">
@@ -57,5 +64,22 @@
 		  	PRIMARY KEY (id)
 		) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;
 	</update>
+	
+	<select id="findPage" resultMap="baseResultMap" parameterType="com.appleframework.orm.mybatis.query.PageQuery">
+		select 
+			<include refid="baseColumnList" /> 
+		from 
+			qos.app_info
+		where 1=1 
+         	<if test="keyword!=null">  
+            	and 
+            	( 
+            		name like '%${keyword}%' 
+         			or
+            		code like '%${keyword}%' 
+            	)
+         	</if>
+         	order by disorder asc
+	</select>
 	   
 </mapper>

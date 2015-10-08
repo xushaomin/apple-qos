@@ -1,10 +1,14 @@
 package com.appleframework.qos.server.statistics.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
+import com.appleframework.model.page.Pagination;
+import com.appleframework.orm.mybatis.query.PageQuery;
 import com.appleframework.qos.server.core.entity.AppInfo;
 import com.appleframework.qos.server.statistics.dao.AppInfoDao;
 import com.appleframework.qos.server.statistics.service.AppInfoService;
@@ -48,10 +52,12 @@ public class AppInfoServiceImpl implements AppInfoService {
 		}
 	}
 	
-	/*public List<AppInfo> findPage(Pagination page, String keyword) {
+	public Pagination findPage(Pagination page, String keyword) {
 		PageQuery query = PageQuery.create(page);
 		query.addParameters("keyword", keyword);
-		return appInfoDao.findPage(query);
-	}*/
+		List<AppInfo> list = appInfoDao.findPage(query);
+		page.setList(list);
+		return page;
+	}
 
 }

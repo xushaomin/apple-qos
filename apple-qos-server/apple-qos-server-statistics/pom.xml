@@ -6,14 +6,14 @@
 	<parent>
 		<artifactId>apple-qos-server</artifactId>
 		<groupId>com.appleframework.qos</groupId>
-		<version>0.0.2-SNAPSHOT</version>
+		<version>0.0.4.RELEASE</version>
 	</parent>
 	<artifactId>apple-qos-server-statistics</artifactId>
 	<name>apple-qos-server-statistics</name>
 	<url>http://mvnrepo.appleframework.com</url>
 	
 	<properties>
-		<apple.version>0.0.3.RELEASE</apple.version>
+		<apple.version>0.0.4.RELEASE</apple.version>
 		<config.version>0.1.1.RELEASE</config.version>
 	</properties>
 
@@ -49,7 +49,11 @@
 			<groupId>com.appleframework.config</groupId>
 			<artifactId>apple-config-diamond</artifactId>
 		</dependency>
-
+		
+		<dependency>
+			<groupId>com.appleframework.boot</groupId>
+			<artifactId>apple-boot-jetty</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.aspectj</groupId>

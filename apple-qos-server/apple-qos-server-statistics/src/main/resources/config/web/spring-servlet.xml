@@ -16,8 +16,8 @@
 	<!-- 进行资源映射，请自行修改 -->
 	<import resource="resources.xml" />
 	<!-- 以下为固定配置，无特殊情况请不要修改
-	<import resource="classpath*:config/applicationContext-context.xml" />
-	<import resource="classpath*:config/applicationContext-mvc.xml" />
+	<import resource="classpath*:config/service/applicationContext-context.xml" />
+	<import resource="classpath*:config/service/applicationContext-mvc.xml" />
 	 -->
 
 </beans>

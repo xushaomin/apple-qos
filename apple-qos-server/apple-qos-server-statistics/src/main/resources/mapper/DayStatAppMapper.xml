@@ -140,20 +140,20 @@
 		select 
 			<include refid="baseColumnList" /> 
 		from 
-			glsx_gsc_${queryParams.month}.glsx_stat_day_app_${queryParams.month}
+			glsx_gsc_${month}.glsx_stat_day_app_${month}
 		where 1=1 
-			<if test="queryParams.startDate!=null">  
-            	and stat_date &gt;= #{queryParams.startDate, jdbcType=TIMESTAMP} 
+			<if test="startDate!=null">  
+            	and stat_date &gt;= #{startDate, jdbcType=TIMESTAMP} 
          	</if>
-         	<if test="queryParams.endDate!=null">  
-            	and stat_date &lt;= #{queryParams.endDate, jdbcType=TIMESTAMP} 
+         	<if test="endDate!=null">  
+            	and stat_date &lt;= #{endDate, jdbcType=TIMESTAMP} 
          	</if>
          	
-         	<if test="queryParams.consumerAppName!=null">  
-            	and consumer_app_name like '%${queryParams.consumerAppName}%' 
+         	<if test="consumerAppName!=null">  
+            	and consumer_app_name like '%${consumerAppName}%' 
          	</if>
-         	<if test="queryParams.providerAppName!=null">  
-            	and provider_app_name like '%${queryParams.providerAppName}%' 
+         	<if test="providerAppName!=null">  
+            	and provider_app_name like '%${providerAppName}%' 
          	</if>
          	order by stat_date desc, total_succ_per asc
 	</select>
@@ -162,14 +162,14 @@
 		select 
 			<include refid="baseColumnList" /> 
 		from 
-			glsx_gsc_${queryParams.month}.glsx_stat_day_app_${queryParams.month}
+			glsx_gsc_${month}.glsx_stat_day_app_${month}
 		where
-			stat_date = #{queryParams.startDate, jdbcType=TIMESTAMP} 
-         	<if test="queryParams.consumerAppName!=null">  
-            	and consumer_app_name like '%${queryParams.consumerAppName}%' 
+			stat_date = #{startDate, jdbcType=TIMESTAMP} 
+         	<if test="consumerAppName!=null">  
+            	and consumer_app_name like '%${consumerAppName}%' 
          	</if>
-         	<if test="queryParams.providerAppName!=null">  
-            	and provider_app_name like '%${queryParams.providerAppName}%' 
+         	<if test="providerAppName!=null">  
+            	and provider_app_name like '%${providerAppName}%' 
          	</if>
          	order by total_succ_per asc, fail_sum_number desc, fail_avg_elapsed desc
 	</select>
@@ -198,5 +198,27 @@
 			KEY app_id (provider_app_id,consumer_app_id)
 		) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;
 	</update>
+	
+	<select id="findPage" resultMap="baseResultMap" parameterType="com.appleframework.orm.mybatis.query.PageQuery">
+		select 
+			<include refid="baseColumnList" /> 
+		from 
+			qos.stat_day_app
+		where 1=1 
+			<if test="startDate!=null">  
+            	and stat_date &gt;= #{startDate, jdbcType=TIMESTAMP} 
+         	</if>
+         	<if test="endDate!=null">  
+            	and stat_date &lt;= #{endDate, jdbcType=TIMESTAMP} 
+         	</if>
+         	
+         	<if test="consumerAppName!=null">  
+            	and consumer_app_name like '%${consumerAppName}%' 
+         	</if>
+         	<if test="providerAppName!=null">  
+            	and provider_app_name like '%${providerAppName}%' 
+         	</if>
+         	order by stat_date desc, total_succ_per asc
+	</select>
 	   
 </mapper>
