@@ -202,11 +202,11 @@
 			</activation>
 			<distributionManagement>
 				<repository>
-					<id>internal.repo.release</id>
+					<id>nexus-releases</id>
 					<url>http://mvnrepo.appleframework.com/nexus/content/repositories/releases/</url>
 				</repository>
 				<snapshotRepository>
-					<id>internal.repo.snapshot</id>
+					<id>nexus-snapshots</id>
 					<url>http://mvnrepo.appleframework.com/nexus/content/repositories/snapshots/</url>
 				</snapshotRepository>
 			</distributionManagement>
