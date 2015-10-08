@@ -87,6 +87,10 @@ public class CollectInterceptor implements MethodInterceptor {
 		String application = ApplicationUtils.getApplicationName();
 		//String service = methodInvocation.getMethod().getDeclaringClass().getName();// 获取服务名称
 		String service = methodInvocation.getThis().getClass().getCanonicalName();
+		int index = service.indexOf("$$");
+		if(index  > -1) {
+			service = service.substring(0, index);
+		}
 		String method = methodInvocation.getMethod().getName(); // 获取方法名
 
 		CollectApi.collect(application, service, method, start, error, errorCode);
