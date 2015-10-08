@@ -9,6 +9,7 @@ import com.alibaba.dubbo.common.extension.Activate;
 import com.alibaba.dubbo.common.utils.NetUtils;
 import com.alibaba.dubbo.rpc.*;
 import com.alibaba.dubbo.rpc.support.RpcUtils;
+import com.appleframework.exception.ServiceException;
 import com.appleframework.qos.collector.core.CollectApi;
 import com.appleframework.qos.collector.core.URL;
 import com.appleframework.qos.collector.core.utils.DateFormatUtils;
@@ -39,6 +40,17 @@ public class CollectFilter implements Filter {
             try {
                 Result result = invoker.invoke(invocation); // 让调用链往下执行
                 collect(invoker, invocation, result, context, start, false, "0");
+                if(result.hasException()) {
+                	if(result.getException() instanceof ServiceException ) {
+                		ServiceException e = (ServiceException)result.getException();
+                		String code = e.getCode();
+                		collect(invoker, invocation, result, context, 
+                				start, false, null == code ?"0":code);
+                	}
+                }
+                else {
+                	collect(invoker, invocation, result, context, start, false, "0");
+                }
                 return result;
             } catch (RpcException e) {
                 collect(invoker, invocation, null, context, start, true, String.valueOf(e.getCode() + 1));
