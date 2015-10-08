@@ -6,7 +6,7 @@
 	<parent>
 		<artifactId>apple-qos-server</artifactId>
 		<groupId>com.appleframework.qos</groupId>
-		<version>0.0.2-SNAPSHOT</version>
+		<version>0.0.4.RELEASE</version>
 	</parent>
 	<artifactId>apple-qos-server-agent</artifactId>
 	<name>apple-qos-server-agent</name>

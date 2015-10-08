@@ -10,6 +10,7 @@ public class AppInfo extends BaseEntity {
 	private Short state;
 	private Short isAuto;
 	private Integer disorder;
+	private String remark;
 
 	public String getName() {
 		return name;
@@ -49,6 +50,14 @@ public class AppInfo extends BaseEntity {
 
 	public void setIsAuto(Short isAuto) {
 		this.isAuto = isAuto;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 }
