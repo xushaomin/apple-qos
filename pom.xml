@@ -18,7 +18,7 @@
 		<orm.version>0.0.8.RELEASE</orm.version>
 		<config.version>0.1.3.RELEASE</config.version>
 		<jms.version>0.0.7.RELEASE</jms.version>
-		<boot.version>0.1.8.RELEASE</boot.version>
+		<boot.version>0.1.9.RELEASE</boot.version>
 		<aspectj.version>1.6.8</aspectj.version>
 		<java.version>1.7</java.version>
 	</properties>
