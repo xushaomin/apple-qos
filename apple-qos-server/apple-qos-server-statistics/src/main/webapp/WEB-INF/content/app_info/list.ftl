@@ -45,7 +45,7 @@
     </div>
     <!-- end of con_search -->
     
-	<div class="c_tipsA">截止到今日：已记录统计 <span class="red">${list?size}</span> 个 </div>
+	<div class="c_tipsA">截止到今日：已记录统计 <span class="red">${page.totalCount}</span> 个 </div>
     
     
     <!-- start of table_list -->
@@ -59,7 +59,7 @@
         	<th width="8%">创建时间</th>			
 			<th width="15%">操作</th>
         </tr>
-        <#list list as info>
+        <#list page.list as info>
         <tr class="even">
         	<td><!--<input type="checkbox" name="ids" value="${info.id}" />-->${info.id}</td>
         	
@@ -81,7 +81,7 @@
     </table>
     <!-- end of table_list -->			
 	
-	<#if (list?size > 0)>
+	<#if (page.list?size > 0)>
     
     	<!-- start of table_bottom -->
 	    <div class="table_bottom clearfix">
