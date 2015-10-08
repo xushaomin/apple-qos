@@ -6,13 +6,13 @@
 		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 	
 	<bean id="propertyConfigurer"
-		class="com.appleframework.config.diamond.spring.ExtendedPropertyPlaceholderConfigurer">
+		class="com.appleframework.config.ExtendedPropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
 				<value>classpath:system.properties</value>
 			</list>
 		</property>
-		<property name="loadDiamond" value="true" />
+		<property name="loadRemote" value="true" />
 	</bean>
 		
 	<bean id="agentMonitor" class="com.appleframework.qos.server.agent.AgentMonitor">
