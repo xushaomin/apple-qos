@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>apple-qos</artifactId>
+		<groupId>com.appleframework.qos</groupId>
+		<version>0.0.4.RELEASE</version>
+	</parent>
+	<artifactId>apple-qos-collector</artifactId>
+	<name>apple-qos-collector</name>
+	<url>http://mvnrepo.appleframework.com</url>
+	<packaging>pom</packaging>
+	
+	<modules>
+		<module>apple-qos-collector-core</module>
+		<module>apple-qos-collector-spring</module>
+		<module>apple-qos-collector-dubbo</module>
+	</modules>
+	
+</project>

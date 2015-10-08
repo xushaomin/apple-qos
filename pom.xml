@@ -5,21 +5,21 @@
 
 	<groupId>com.appleframework.qos</groupId>
 	<artifactId>apple-qos</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.4.RELEASE</version>
 	<packaging>pom</packaging>
 
 	<name>apple-qos</name>
 	<url>http://mvnrepo.appleframework.com</url>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.version>0.0.2-SNAPSHOT</project.version>
-		<spring.version>4.0.5.RELEASE</spring.version>
-		<apple.version>0.0.3.RELEASE</apple.version>
-		<config.version>0.1.1.RELEASE</config.version>
-		<jms.version>0.0.3.RELEASE</jms.version>
-		<boot.version>0.1.1.RELEASE</boot.version>
+		<project.version>0.0.4.RELEASE</project.version>
+		<spring.version>4.2.0.RELEASE</spring.version>
+		<apple.version>0.1.3.RELEASE</apple.version>
+		<config.version>0.1.3.RELEASE</config.version>
+		<jms.version>0.0.7.RELEASE</jms.version>
+		<boot.version>0.1.8.RELEASE</boot.version>
 		<aspectj.version>1.6.8</aspectj.version>
+		<java.version>1.7</java.version>
 	</properties>
 
 	<dependencyManagement>
@@ -28,31 +28,31 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.8.1</version>
+				<version>4.12</version>
 				<scope>test</scope>
 			</dependency>
 			
 			<dependency>
 				<groupId>com.appleframework</groupId>
-				<artifactId>appleframework-core</artifactId>
+				<artifactId>apple-core</artifactId>
 				<version>${apple.version}</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>com.appleframework</groupId>
-				<artifactId>appleframework-orm</artifactId>
+				<artifactId>apple-orm</artifactId>
 				<version>${apple.version}</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>com.appleframework</groupId>
-				<artifactId>appleframework-web</artifactId>
+				<artifactId>apple-web</artifactId>
 				<version>${apple.version}</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>com.appleframework</groupId>
-				<artifactId>appleframework-exception</artifactId>
+				<artifactId>apple-exception</artifactId>
 				<version>${apple.version}</version>
 			</dependency>
 
@@ -132,8 +132,83 @@
 			
 		</dependencies>
 	</dependencyManagement>
+	
 	<modules>
 		<module>apple-qos-collector</module>
 		<module>apple-qos-server</module>
 	</modules>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>${file.encoding}</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<encoding>${file.encoding}</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.7.2</version>
+				<configuration>
+					<forkMode>once</forkMode>
+					<argLine>-Dfile.encoding=${file.encoding}</argLine>
+					<systemProperties>
+						<property>
+							<name>net.sourceforge.cobertura.datafile</name>
+							<value>target/cobertura/cobertura.ser</value>
+						</property>
+					</systemProperties>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>localDM</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<distributionManagement>
+				<repository>
+					<id>internal.repo.release</id>
+					<url>http://mvnrepo.appleframework.com/nexus/content/repositories/releases/</url>
+				</repository>
+				<snapshotRepository>
+					<id>internal.repo.snapshot</id>
+					<url>http://mvnrepo.appleframework.com/nexus/content/repositories/snapshots/</url>
+				</snapshotRepository>
+			</distributionManagement>
+		</profile>
+	</profiles>
 </project>
