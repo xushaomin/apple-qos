@@ -238,18 +238,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	<distributionManagement>
-		<repository>
-			<id>nexus-releases</id>
-			<name>Local Nexus Releases Repository</name>
-			<url>http://mvnrepo.net:7060/nexus/content/repositories/releases</url>
-		</repository>
-
-		<snapshotRepository>
-			<id>nexus-snapshots</id>
-			<name>Local Nexus Snapshots Repository</name>
-			<url>http://mvnrepo.net:7060/nexus/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
 	
 </project>
