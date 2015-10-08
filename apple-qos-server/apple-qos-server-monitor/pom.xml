@@ -71,7 +71,7 @@
 
 		<dependency>
 			<groupId>com.appleframework</groupId>
-			<artifactId>appleframework-orm</artifactId>
+			<artifactId>apple-orm</artifactId>
 		</dependency>
 
 	</dependencies>
