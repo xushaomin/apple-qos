@@ -70,8 +70,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.appleframework</groupId>
-			<artifactId>apple-orm</artifactId>
+			<groupId>com.appleframework.orm</groupId>
+			<artifactId>apple-orm-mybatis</artifactId>
 		</dependency>
 
 	</dependencies>

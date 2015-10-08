@@ -11,11 +11,6 @@
 	<artifactId>apple-qos-server-statistics</artifactId>
 	<name>apple-qos-server-statistics</name>
 	<url>http://mvnrepo.appleframework.com</url>
-	
-	<properties>
-		<apple.version>0.0.4.RELEASE</apple.version>
-		<config.version>0.1.1.RELEASE</config.version>
-	</properties>
 
 	<dependencies>
 
@@ -30,8 +25,8 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>com.appleframework</groupId>
-			<artifactId>apple-orm</artifactId>
+			<groupId>com.appleframework.orm</groupId>
+			<artifactId>apple-orm-mybatis</artifactId>
 		</dependency>
 		
 		<dependency>
