@@ -26,7 +26,8 @@ public class ObjectToFileUtils {
 		}
     }  
       
-    public static Object readObject(String filePath){
+    @SuppressWarnings("resource")
+	public static Object readObject(String filePath){
     	FileInputStream freader;
     	try {
     		freader = new FileInputStream(filePath);  

@@ -21,7 +21,6 @@ public class SendTask {
 		/*logger.info("--->send task time: " + 
 				DateFormatUtil.toString(new Date(), DateFormatUtil.pattern19));*/
 		
-		//发送数据
 		agentMonitor.send();
 		
 		//logger.info("--->total count =: " + MonitorSendService.count);
