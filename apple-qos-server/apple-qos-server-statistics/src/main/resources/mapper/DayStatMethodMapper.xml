@@ -48,7 +48,7 @@
 	</sql>
 	
 	<insert id="insert" parameterType="com.appleframework.qos.server.core.entity.DayStatMethod">
-		insert into qos.stat_day_method (
+		insert into stat_day_method (
 		
 			provider_app_id,
 			provider_app_name,
@@ -98,7 +98,7 @@
 	
 	<update id="update" parameterType="com.appleframework.qos.server.core.entity.DayStatMethod">
 		update 
-			qos.stat_day_method
+			stat_day_method
 		set 
 			fail_sum_number = ${failSumNumber},
 			fail_avg_elapsed  = ${failAvgElapsed},
@@ -118,7 +118,7 @@
 		select 
 			<include refid="baseColumnList" /> 
 		from 
-			qos.stat_day_method
+			stat_day_method
 		where 
 			provider_app_id = ${providerAppId} and 
 			consumer_app_id = ${consumerAppId} and 
@@ -132,22 +132,22 @@
 		select 
 			<include refid="baseColumnList" /> 
 		from 
-			glsx_gsc_${queryParams.month}.glsx_stat_day_service_${queryParams.month}
+			glsx_gsc_${month}.glsx_stat_day_service_${month}
 		where 
-			stat_date = #{queryParams.startDate, jdbcType=TIMESTAMP} 
+			stat_date = #{startDate, jdbcType=TIMESTAMP} 
          	
-         	<if test="queryParams.consumerAppName!=null">  
-            	and consumer_app_name like '%${queryParams.consumerAppName}%' 
+         	<if test="consumerAppName!=null">  
+            	and consumer_app_name like '%${consumerAppName}%' 
          	</if>
-         	<if test="queryParams.providerAppName!=null">  
-            	and provider_app_name like '%${queryParams.providerAppName}%' 
+         	<if test="providerAppName!=null">  
+            	and provider_app_name like '%${providerAppName}%' 
          	</if>
          	
-         	<if test="queryParams.service!=null">  
-            	and service like '%${queryParams.service}%' 
+         	<if test="service!=null">  
+            	and service like '%${service}%' 
          	</if>
-         	<if test="queryParams.method!=null">  
-            	and method like '%${queryParams.method}%' 
+         	<if test="method!=null">  
+            	and method like '%${method}%' 
          	</if>
          	
          	order by stat_date desc, total_sum_number desc
@@ -155,7 +155,7 @@
 	 -->
 	 
 	 <update id="createTable">
-		CREATE TABLE IF NOT EXISTS qos.stat_day_method (
+		CREATE TABLE IF NOT EXISTS stat_day_method (
 			  id int(11) NOT NULL AUTO_INCREMENT,
 			  stat_date date DEFAULT NULL COMMENT '统计时间',
 			  provider_app_id int(11) DEFAULT NULL COMMENT '服务提供方应用ID',
@@ -178,4 +178,36 @@
 			  PRIMARY KEY (id)
 		) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;
 	</update>
+	
+	<select id="findPage" resultMap="baseResultMap" parameterType="com.appleframework.orm.mybatis.query.PageQuery">
+		select 
+			<include refid="baseColumnList" /> 
+		from 
+			stat_day_method
+		where 
+			1=1
+			
+			<if test="startDate!=null">  
+            	and stat_date &gt;= #{startDate, jdbcType=TIMESTAMP} 
+         	</if>
+         	<if test="endDate!=null">  
+            	and stat_date &lt;= #{endDate, jdbcType=TIMESTAMP} 
+         	</if>
+         	
+         	<if test="consumerAppName!=null">  
+            	and consumer_app_name like '%${consumerAppName}%' 
+         	</if>
+         	<if test="providerAppName!=null">  
+            	and provider_app_name like '%${providerAppName}%' 
+         	</if>
+         	
+         	<if test="service!=null">  
+            	and service like '%${service}%' 
+         	</if>
+         	<if test="method!=null">  
+            	and method like '%${method}%' 
+         	</if>
+         	
+         	order by total_succ_per asc, stat_date asc
+	</select>
 </mapper>

@@ -20,7 +20,7 @@
 	
 	<insert id="insert" parameterType="com.appleframework.qos.server.core.entity.NodeInfo"
 	    useGeneratedKeys="true" keyProperty="id">
-		insert into qos.node_info (
+		insert into node_info (
 			ip,
 			host,
 			state,
@@ -40,12 +40,12 @@
 	<select id="getByIp" resultMap="baseResultMap" parameterType="java.lang.String">
 		select
 		<include refid="baseColumnList" />
-		from qos.node_info
+		from node_info
 		where ip = #{ip, jdbcType=VARCHAR}
 	</select>
 		
 	<update id="createTable">
-		CREATE TABLE IF NOT EXISTS qos.node_info (
+		CREATE TABLE IF NOT EXISTS node_info (
 		  	id int(11) NOT NULL AUTO_INCREMENT,
 		  	ip varchar(64) DEFAULT NULL COMMENT '服务器IP',
 		  	host varchar(64) DEFAULT NULL COMMENT '服务器HOST',

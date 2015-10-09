@@ -65,22 +65,22 @@
 	
 	<select id="findAppByDate" resultMap="baseResultMap" parameterType="java.util.Date">
 		select distinct provider_app_id, consumer_app_id, provider_app_name, consumer_app_name
-		from qos.min_collect where collect_date = #{collectDate, jdbcType=TIMESTAMP}; 
+		from min_collect where collect_date = #{collectDate, jdbcType=TIMESTAMP };
 	</select>
 	
 	<select id="findCodeByDate" resultMap="baseResultMap" parameterType="java.util.Date">
 		select distinct provider_app_id, consumer_app_id, provider_app_name, consumer_app_name, error_code
-		from qos.min_collect where collect_date = #{collectDate, jdbcType=TIMESTAMP};
+		from min_collect where collect_date = #{collectDate, jdbcType=TIMESTAMP};
 	</select>
 	
 	<select id="findNodeByDate" resultMap="baseResultMap" parameterType="java.util.Date">
 		select distinct provider_app_id, consumer_app_id, provider_app_name, consumer_app_name, provider_node_id, provider_addr
-		from qos.min_collect where collect_date = #{collectDate, jdbcType=TIMESTAMP};
+		from min_collect where collect_date = #{collectDate, jdbcType=TIMESTAMP};
 	</select>
 	
 	<select id="findMethodByDate" resultMap="baseResultMap" parameterType="java.util.Date">
 		select distinct service, method, provider_app_id, consumer_app_id, provider_app_name, consumer_app_name
-		from qos.min_collect where collect_date = #{collectDate, jdbcType=TIMESTAMP}
+		from min_collect where collect_date = #{collectDate, jdbcType=TIMESTAMP}
 		and method is not null and method != 'null'
 	</select>
 	
@@ -88,7 +88,7 @@
 	<select id="sumSuccessByApp" resultType="com.appleframework.qos.server.statistics.model.DaySumApp" 
 		parameterType="com.appleframework.orm.mybatis.query.MapQuery">
 		select sum(success) as success, sum(elapsed) as elapsed, max(max_elapsed) as maxElapsed
-		from qos.min_collect
+		from min_collect
 		where success > 0 and consumer_app_id = ${consumerAppId} and provider_app_id = ${providerAppId} 
 		and collect_date = #{collectDate, jdbcType=TIMESTAMP};
 	</select>
@@ -96,7 +96,7 @@
 	<select id="sumFailureByApp" resultType="com.appleframework.qos.server.statistics.model.DaySumApp" 
 		parameterType="com.appleframework.orm.mybatis.query.MapQuery">
 		select sum(failure) as failure, sum(elapsed) as elapsed, max(max_elapsed) as maxElapsed
-		from qos.min_collect
+		from min_collect
 		where failure > 0 and consumer_app_id = ${consumerAppId} and provider_app_id = ${providerAppId} 
 		and collect_date = #{collectDate, jdbcType=TIMESTAMP};
 	</select>
@@ -104,7 +104,7 @@
 	<select id="sumCodeByApp" resultType="com.appleframework.qos.server.statistics.model.DaySumCode" 
 		parameterType="com.appleframework.orm.mybatis.query.MapQuery">
 		select sum(success) as success, sum(failure) as failure
-		from qos.min_collect
+		from min_collect
 		where error_code = '${errorCode}' 
 		and consumer_app_id = ${consumerAppId} and provider_app_id = ${providerAppId}
 		and collect_date = #{collectDate, jdbcType=TIMESTAMP};;
@@ -113,7 +113,7 @@
 	<select id="sumNodeByApp" resultType="com.appleframework.qos.server.statistics.model.DaySumNode" 
 		parameterType="com.appleframework.orm.mybatis.query.MapQuery">
 		select sum(success) as success, sum(failure) as failure
-		from qos.min_collect
+		from min_collect
 		where provider_node_id = ${providerNodeId} 
 		and consumer_app_id = ${consumerAppId} and provider_app_id = ${providerAppId}
 		and collect_date = #{collectDate, jdbcType=TIMESTAMP};
@@ -125,7 +125,7 @@
 		select 
 			sum(success) as success, sum(elapsed) as elapsed, max(max_elapsed) as maxElapsed
 		from 
-			qos.min_collect
+			min_collect
 		where
 		 	consumer_app_id = ${consumerAppId} and provider_app_id = ${providerAppId}
 			and success > 0
@@ -138,7 +138,7 @@
 		select 
 			sum(failure) as failure, sum(elapsed) as elapsed, max(max_elapsed) as maxElapsed
 		from 
-			qos.min_collect
+			min_collect
 		where 
 			consumer_app_id = ${consumerAppId} and provider_app_id = ${providerAppId}
 			and failure > 0

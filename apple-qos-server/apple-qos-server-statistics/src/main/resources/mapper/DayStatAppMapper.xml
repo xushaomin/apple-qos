@@ -106,7 +106,7 @@
 		select 
 			<include refid="baseColumnList" /> 
 		from 
-			qos.stat_day_app
+			stat_day_app
 		where 
 			provider_app_id = ${providerAppId} and 
 			consumer_app_id = ${consumerAppId} and 
@@ -176,7 +176,7 @@
 	 -->
 	 
 	<update id="createTable">
-		CREATE TABLE IF NOT EXISTS qos.stat_day_app (
+		CREATE TABLE IF NOT EXISTS stat_day_app (
 			id bigint(20) NOT NULL AUTO_INCREMENT,
 			stat_date date DEFAULT NULL COMMENT '统计时间',
 		  	provider_app_id bigint(11) DEFAULT NULL COMMENT '服务提供方应用ID',
@@ -203,7 +203,7 @@
 		select 
 			<include refid="baseColumnList" /> 
 		from 
-			qos.stat_day_app
+			stat_day_app
 		where 1=1 
 			<if test="startDate!=null">  
             	and stat_date &gt;= #{startDate, jdbcType=TIMESTAMP} 

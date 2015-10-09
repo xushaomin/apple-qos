@@ -32,7 +32,7 @@
 	</sql>
 	
 	<insert id="insert" parameterType="com.appleframework.qos.server.core.entity.DayStatNode">
-		insert into qos.stat_day_node (
+		insert into stat_day_node (
 			provider_app_id,
 			provider_app_name,
 			consumer_app_id,
@@ -62,7 +62,7 @@
 	
 	<update id="update" parameterType="com.appleframework.qos.server.core.entity.DayStatNode">
 		update 
-			qos.stat_day_node
+			stat_day_node
 		set 
 			total_sum_number = ${totalSumNumber},
 			update_time = #{updateTime, jdbcType=TIMESTAMP}
@@ -75,7 +75,7 @@
 		select 
 			<include refid="baseColumnList" />
 		from 
-			qos.stat_day_node
+			stat_day_node
 		where 
 			provider_app_id = ${providerAppId} and 
 			consumer_app_id = ${consumerAppId} and 
@@ -88,7 +88,7 @@
 		select 
 			<include refid="baseColumnList" /> 
 		from 
-			qos.stat_day_node
+			stat_day_node
 		where 1=1 
 			<if test="startDate!=null">  
             	and stat_date &gt;= #{startDate, jdbcType=TIMESTAMP} 
@@ -130,7 +130,7 @@
 	 -->
 	 
 	 <update id="createTable">
-		CREATE TABLE IF NOT EXISTS qos.stat_day_node (
+		CREATE TABLE IF NOT EXISTS stat_day_node (
 			  id int(11) NOT NULL AUTO_INCREMENT,
 			  stat_date date DEFAULT NULL COMMENT '统计时间',
 			  provider_app_id int(11) DEFAULT NULL COMMENT '服务提供方应用ID',

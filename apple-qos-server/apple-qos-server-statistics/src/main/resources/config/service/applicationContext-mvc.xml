@@ -19,10 +19,9 @@
 
 	<context:component-scan base-package="com.appleframework.qos.server.statistics" />
 	
-	<mvc:annotation-driven validator="validator" />
+<mvc:annotation-driven validator="validator" />
 	
-
-	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
+		<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
 
 	<bean id="viewNameTranslator" class="org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator" />
 	
@@ -66,6 +65,9 @@
 				<prop key="output_encoding">UTF-8</prop>
 				<prop key="defaultEncoding">UTF-8</prop>
 				<prop key="url_escaping_charset">UTF-8</prop>
+				
+				<prop key="object_wrapper">freemarker.ext.beans.BeansWrapper</prop>
+				
 			</props>
 		</property>
 		<property name="freemarkerVariables">
@@ -84,7 +86,6 @@
 				</entry>
 				<entry key="xml_escape" value-ref="fmXmlEscape" />
 				<entry key="paging" value-ref="paginationDirective"/>
-				<!-- <entry key="datetime" value-ref="datetimeDirective"/> -->
 			</map>
 		</property>
 	</bean>
@@ -109,16 +110,24 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
-	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-		<property name="mediaTypes">
-			<map>
+	<bean id="cnManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">  
+        <property name="ignoreAcceptHeader" value="true"/>  
+        <property name="favorPathExtension" value="true"/>  
+        <property name="defaultContentType" value="text/html"/>  
+        <property name="favorParameter" value="true"/>  
+        <property name="mediaTypes">  
+            <map>
 				<entry key="atom" value="application/atom+xml" />
 				<entry key="html" value="text/html" />
 				<entry key="htm" value="text/html" />
 				<entry key="ftl" value="text/html" />
 				<entry key="json" value="application/json" />
-			</map>
-		</property>
+			</map>  
+        </property>  
+    </bean>
+    
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="contentNegotiationManager" ref="cnManager"/>  
 		<property name="viewResolvers">
 			<list>
 				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
@@ -141,10 +150,9 @@
 		</property>
 		<property name="defaultViews">
 			<list>
-				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+				<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
 			</list>
 		</property>
-		<property name="ignoreAcceptHeader" value="true" />
 	</bean>
 	
 	<!-- 返回json 配置 -->
@@ -156,7 +164,7 @@
 		</property>
 	</bean>
 	<bean id="mappingJacksonHttpMessageConverter"
-		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 		<property name="supportedMediaTypes">
 			<list>
 				<value>text/html;charset=UTF-8</value>
@@ -170,8 +178,6 @@
 		<property name="maxUploadSize" value="9000000000000" />
 	</bean>
 	
-	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"></bean>
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 	
-
-
 </beans>

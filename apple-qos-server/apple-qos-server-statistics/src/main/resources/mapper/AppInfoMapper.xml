@@ -21,7 +21,7 @@
 	
 	<insert id="insert" parameterType="com.appleframework.qos.server.core.entity.AppInfo"
 	    useGeneratedKeys="true" keyProperty="id">
-		insert into qos.app_info (
+		insert into app_info (
 			name,
 			code,
 			state,
@@ -41,19 +41,19 @@
 	<select id="getByCode" resultMap="baseResultMap" parameterType="java.lang.String">
 		select
 		<include refid="baseColumnList" />
-		from qos.app_info
+		from app_info
 		where code = #{code,jdbcType=BIGINT}
 	</select>
 	
 	<select id="get" resultMap="baseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="baseColumnList" />
-		from qos.app_info
+		from app_info
 		where id = #{id,jdbcType=VARCHAR}
 	</select>
 		
 	<update id="createTable">
-		CREATE TABLE IF NOT EXISTS qos.app_info (
+		CREATE TABLE IF NOT EXISTS app_info (
 			id int(11) NOT NULL AUTO_INCREMENT,
 		  	code varchar(64) DEFAULT NULL COMMENT '应用命名',
 		  	name varchar(255) DEFAULT NULL COMMENT '应用名称',
@@ -69,7 +69,7 @@
 		select 
 			<include refid="baseColumnList" /> 
 		from 
-			qos.app_info
+			app_info
 		where 1=1 
          	<if test="keyword!=null">  
             	and 
