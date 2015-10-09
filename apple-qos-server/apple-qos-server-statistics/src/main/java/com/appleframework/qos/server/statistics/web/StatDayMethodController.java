@@ -14,6 +14,7 @@ import com.appleframework.model.page.Pagination;
 import com.appleframework.qos.server.statistics.service.DayStatMethodService;
 import com.appleframework.qos.server.statistics.utils.Constants;
 import com.appleframework.qos.server.statistics.utils.DateFormatUtil;
+import com.appleframework.qos.server.statistics.utils.DateUtil;
 import com.appleframework.web.springmvc.controller.BaseController;
 
 @Controller
@@ -42,14 +43,14 @@ public class StatDayMethodController extends BaseController {
 			startDay = DateFormatUtil.toDate(startDate, Constants.pattern10);
 		}
 		else {
-			startDay = new Date();
+			startDay = DateUtil.getToday();
 			startDate = DateFormatUtil.toString(startDay, Constants.pattern10);
 		}
 		
 		if(!StringUtils.isEmpty(endDate))
 			endDay = DateFormatUtil.toDate(endDate, Constants.pattern10);
 		else {
-			endDay = new Date();
+			endDay = DateUtil.getToday();
 			endDate = DateFormatUtil.toString(endDay, Constants.pattern10);
 		}
 		
