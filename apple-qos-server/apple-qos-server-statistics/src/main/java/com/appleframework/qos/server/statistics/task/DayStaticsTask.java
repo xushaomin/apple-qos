@@ -17,8 +17,8 @@ public class DayStaticsTask {
 	private DayStatService dayStatService;
 		
 	@SuppressWarnings("deprecation")
-	//@Scheduled(cron = "30 0/1 * * * ?")
-	@Scheduled(cron = "0/30 * * * * ?")
+	@Scheduled(cron = "30 0/1 * * * ?")
+	//@Scheduled(cron = "0/30 * * * * ?")
     public void jobNowDate() {
 		Date date = new Date();
 		/*date.setMonth(0);
