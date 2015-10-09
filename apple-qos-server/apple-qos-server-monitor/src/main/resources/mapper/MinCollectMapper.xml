@@ -36,7 +36,7 @@
 	
 	<!-- 添加统计历史记录 -->
 	<insert id="insert" parameterType="com.appleframework.qos.server.core.entity.MinCollect">
-		insert into qos.min_collect (
+		insert into min_collect (
 			
 			provider_app_id,
 	 		provider_app_name,
@@ -94,7 +94,7 @@
 	
 	
 	<update id="createTable">
-        CREATE TABLE IF NOT EXISTS qos.min_collect (
+        CREATE TABLE IF NOT EXISTS min_collect (
 			  id bigint(20) NOT NULL AUTO_INCREMENT,
 			  collect_time bigint(20) DEFAULT NULL COMMENT '采集时间',
 			  collect_date date DEFAULT NULL COMMENT '采集日期',

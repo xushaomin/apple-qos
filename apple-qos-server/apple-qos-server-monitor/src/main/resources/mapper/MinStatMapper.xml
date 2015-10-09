@@ -52,7 +52,7 @@
 	</sql>
 	
 	<insert id="insert" parameterType="com.appleframework.qos.server.core.entity.MinStat">
-		insert qos.min_stat (
+		insert min_stat (
 			provider_app_id,
 			provider_app_name,
 			consumer_app_id,
@@ -107,13 +107,13 @@
 	<select id="getByMd5" resultMap="baseResultMap" parameterType="map">
 		select
 		<include refid="baseColumnList" />
-		from qos.min_stat
+		from min_stat
 		where md5 = #{md5,jdbcType=VARCHAR}
 	</select>
 		
 	<update id="update" parameterType="com.appleframework.qos.server.core.entity.MinStat">
 		update 
-			qos.min_stat
+			min_stat
 		set 
 			fail_sum_number = ${failSumNumber},
 			fail_avg_elapsed = ${failAvgElapsed},
@@ -131,7 +131,7 @@
 	</update>
 	
 	<update id="createTable">
-        CREATE TABLE IF NOT EXISTS qos.min_stat (
+        CREATE TABLE IF NOT EXISTS min_stat (
 			id bigint(20) NOT NULL AUTO_INCREMENT,
 		  	stat_time bigint(20) DEFAULT NULL COMMENT '采集时间',
 		  	stat_date date DEFAULT NULL COMMENT '采集时间',

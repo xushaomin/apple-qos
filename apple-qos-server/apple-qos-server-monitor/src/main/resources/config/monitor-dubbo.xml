@@ -6,20 +6,20 @@
 		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 	
     <bean id="propertyConfigurer"
-		class="com.appleframework.config.diamond.spring.ExtendedPropertyPlaceholderConfigurer">
+		class="com.appleframework.config.ExtendedPropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
 				<value>classpath*:system.properties</value>
 			</list>
 		</property>
-		<property name="loadDiamond" value="true" />
+		<property name="loadRemote" value="true" />
 	</bean>
 	
 	<bean id="springUtility" class="com.appleframework.qos.server.monitor.utils.SpringUtility" lazy-init="false" />
 	
-	<dubbo:application name="${application.name}" owner="${dubbo.application.owner}" />
+	<dubbo:application name="${application.name}" owner="${application.owner:xusm}" />
 	
-	<dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" />
+	<dubbo:registry protocol="zookeeper" address="${registry.address}" />
 	
 	<!-- 
 	<dubbo:protocol name="dubbo" port="${dubbo.protocol.port}" />

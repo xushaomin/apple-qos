@@ -42,7 +42,7 @@ import com.appleframework.qos.server.monitor.utils.SpringUtility;
  */
 public class RegistryContainer implements Container {
 
-    public static final String REGISTRY_ADDRESS = "dubbo.registry.address";
+    public static final String REGISTRY_ADDRESS = "registry.address";
 
     private final Set<String> applications = new ConcurrentHashSet<String>();
 
