@@ -1,6 +1,7 @@
 package com.appleframework.qos.server.statistics.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -8,7 +9,9 @@ import javax.annotation.Resource;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import com.appleframework.model.page.Pagination;
 import com.appleframework.orm.mybatis.query.MapQuery;
+import com.appleframework.orm.mybatis.query.PageQuery;
 import com.appleframework.qos.server.core.entity.DayStatApp;
 import com.appleframework.qos.server.statistics.dao.DayStatAppDao;
 import com.appleframework.qos.server.statistics.service.DayStatAppService;
@@ -43,7 +46,7 @@ public class DayStatAppServiceImpl implements DayStatAppService {
 		return dayStatAppDao.getByDate(query);
 	}
 	
-	/*public List<DayStatApp> findListByDate(Date statDate, String consumerAppName, String providerAppName) {
+	public List<DayStatApp> findListByDate(Date statDate, String consumerAppName, String providerAppName) {
 		MapQuery query = MapQuery.create();
 		query.addParameters("consumerAppName", consumerAppName);
 		query.addParameters("providerAppName", providerAppName);
@@ -72,6 +75,6 @@ public class DayStatAppServiceImpl implements DayStatAppService {
 		List<DayStatApp> list = dayStatAppDao.findPageByBetweenDate(query);
 		page.setList(list);
 		return page;
-	}*/
+	}
 
 }

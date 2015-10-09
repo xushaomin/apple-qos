@@ -17,11 +17,12 @@ public class DayStaticsTask {
 	private DayStatService dayStatService;
 		
 	@SuppressWarnings("deprecation")
-	@Scheduled(cron = "30 0/1 * * * ?")
+	//@Scheduled(cron = "30 0/1 * * * ?")
+	@Scheduled(cron = "0/30 * * * * ?")
     public void jobNowDate() {
 		Date date = new Date();
-		date.setMonth(0);
-		date.setDate(14);
+		/*date.setMonth(0);
+		date.setDate(14);*/
 		date.setHours(0);
 		date.setSeconds(0);
 		date.setMinutes(0);
@@ -43,21 +44,25 @@ public class DayStaticsTask {
 		try {
 			dayStatService.app(date);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		try {
 			dayStatService.code(date);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		try {
 			dayStatService.node(date);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		try {
 			dayStatService.method(date);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

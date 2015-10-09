@@ -3,6 +3,7 @@ package com.appleframework.qos.server.statistics.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.appleframework.orm.mybatis.query.MapQuery;
@@ -17,10 +18,10 @@ public interface MinCollectDao {
 	
 	public void insert(MinCollect sc);
     	
-	public List<MinCollect> findAppByDate(Date date);
-	public List<MinCollect> findCodeByDate(Date date);
-	public List<MinCollect> findNodeByDate(Date date);
-	public List<MinCollect> findMethodByDate(Date date);
+	public List<MinCollect> findAppByDate(@Param("collectDate")Date collectDate);
+	public List<MinCollect> findCodeByDate(@Param("collectDate")Date collectDate);
+	public List<MinCollect> findNodeByDate(@Param("collectDate")Date collectDate);
+	public List<MinCollect> findMethodByDate(@Param("collectDate")Date collectDate);
 
 	public DaySumApp sumSuccessByApp(MapQuery query);
 	public DaySumApp sumFailureByApp(MapQuery query);
