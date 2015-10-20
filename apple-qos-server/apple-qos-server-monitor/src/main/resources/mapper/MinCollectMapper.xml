@@ -92,7 +92,6 @@
 		)
 	</insert>
 	
-	
 	<update id="createTable">
         CREATE TABLE IF NOT EXISTS min_collect (
 			  id bigint(20) NOT NULL AUTO_INCREMENT,
@@ -123,5 +122,5 @@
 			  KEY service (service) COMMENT '服务名称'
 		) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 	</update>
-	
+		
 </mapper>
