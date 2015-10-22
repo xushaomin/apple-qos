@@ -44,8 +44,7 @@ public class CollectFilter implements Filter {
                 	if(result.getException() instanceof AppleException ) {
                 		AppleException e = (AppleException)result.getException();
                 		String code = e.getCode();
-                		collect(invoker, invocation, result, context, 
-                				start, false, null == code ?"0":code);
+                		collect(invoker, invocation, result, context, start, false, null == code ?"0":code);
                 	}
                 }
                 else {
