@@ -39,7 +39,7 @@ public class CollectFilter implements Filter {
             long start = System.currentTimeMillis(); // 记录起始时间戮
             try {
                 Result result = invoker.invoke(invocation); // 让调用链往下执行
-                collect(invoker, invocation, result, context, start, false, "0");
+                //collect(invoker, invocation, result, context, start, false, "0");
                 if(result.hasException()) {
                 	if(result.getException() instanceof ServiceException ) {
                 		ServiceException e = (ServiceException)result.getException();
