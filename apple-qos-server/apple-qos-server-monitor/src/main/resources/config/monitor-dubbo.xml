@@ -28,7 +28,8 @@
 	<dubbo:reference id="registryService" interface="com.alibaba.dubbo.registry.RegistryService" />
 	
 	<bean id="registryContainer"
-		class="com.appleframework.qos.server.monitor.RegistryContainer">
+		class="com.appleframework.qos.server.monitor.RegistryContainer" init-method="start">
+		<property name="registryService" ref="registryService" />
 	</bean>
 		
 </beans>
