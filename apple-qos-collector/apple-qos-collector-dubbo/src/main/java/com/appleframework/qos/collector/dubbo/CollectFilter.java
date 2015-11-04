@@ -46,6 +46,9 @@ public class CollectFilter implements Filter {
                 		String code = e.getCode();
                 		collect(invoker, invocation, result, context, start, false, null == code ?"0":code);
                 	}
+                	else {
+                		collect(invoker, invocation, result, context, start, true, String.valueOf(RpcException.BIZ_EXCEPTION + 1));
+                	}
                 }
                 else {
                 	collect(invoker, invocation, result, context, start, false, "0");
