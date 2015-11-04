@@ -13,6 +13,7 @@
 		<property name="partitionsNum" value="${consumer.partitionsNum}" />
 		<property name="minCollectService" ref="minCollectService" />
 		<property name="minStatService" ref="minStatService" />
+		<property name="registryContainer" ref="registryContainer" />
 	</bean>
 	
 </beans>

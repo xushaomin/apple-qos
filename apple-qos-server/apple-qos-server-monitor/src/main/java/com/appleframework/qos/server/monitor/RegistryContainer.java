@@ -28,7 +28,6 @@ import org.springframework.beans.factory.InitializingBean;
 
 import com.alibaba.dubbo.common.Constants;
 import com.alibaba.dubbo.common.URL;
-import com.alibaba.dubbo.common.extension.ExtensionLoader;
 import com.alibaba.dubbo.common.utils.ConcurrentHashSet;
 import com.alibaba.dubbo.common.utils.NetUtils;
 import com.alibaba.dubbo.container.Container;
@@ -63,24 +62,11 @@ public class RegistryContainer implements Container,  InitializingBean {
     private final Map<String, List<URL>> serviceConsumers = new ConcurrentHashMap<String, List<URL>>();
 
     private RegistryService registry;
-    
-    private static RegistryContainer INSTANCE = null;
-    
+        
     @Override
 	public void afterPropertiesSet() throws Exception {
 		this.start();
 	}
-
-	public RegistryContainer() {
-        INSTANCE = this;
-    }
-    
-    public static RegistryContainer getInstance() {
-        if (INSTANCE == null) {
-            ExtensionLoader.getExtensionLoader(Container.class).getExtension("registry");
-        }
-        return INSTANCE;
-    }
 
     public RegistryService getRegistry() {
         return registry;

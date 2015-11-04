@@ -41,7 +41,7 @@ public class MonitorMessageReceiver extends ObjectMessageConsumer {
         
     private volatile boolean running = true;
         
-    private RegistryContainer registryContainer = RegistryContainer.getInstance();
+    private RegistryContainer registryContainer;
     
     private MinCollectService minCollectService;
     
@@ -60,7 +60,7 @@ public class MonitorMessageReceiver extends ObjectMessageConsumer {
     	saveQueue = new LinkedBlockingQueue<URL>(100000);
     	saveThread = new Thread(new Runnable() {
             public void run() {
-                while (running) {
+            	while (running) {
                     try {
                         save(); // 记录统计日志
                     } catch (Throwable t) { // 防御性容错
@@ -80,7 +80,7 @@ public class MonitorMessageReceiver extends ObjectMessageConsumer {
     	countQueue = new LinkedBlockingQueue<URL>(100000);
     	countThread = new Thread(new Runnable() {
             public void run() {
-                while (running) {
+            	while (running) {
                     try {
                         count(); // 记录统计日志
                     } catch (Throwable t) { // 防御性容错
@@ -352,6 +352,10 @@ public class MonitorMessageReceiver extends ObjectMessageConsumer {
 		URL statistics = (URL) message;
 		saveQueue.offer(statistics);
 		countQueue.offer(statistics);
+	}
+
+	public void setRegistryContainer(RegistryContainer registryContainer) {
+		this.registryContainer = registryContainer;
 	}
 
 }
