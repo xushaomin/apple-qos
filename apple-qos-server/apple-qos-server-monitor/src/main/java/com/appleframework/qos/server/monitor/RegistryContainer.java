@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.beans.factory.InitializingBean;
+
 import com.alibaba.dubbo.common.Constants;
 import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.common.extension.ExtensionLoader;
@@ -40,7 +42,7 @@ import com.appleframework.qos.server.monitor.utils.SpringUtility;
  * 
  * @author william.liangf
  */
-public class RegistryContainer implements Container {
+public class RegistryContainer implements Container,  InitializingBean {
 
     public static final String REGISTRY_ADDRESS = "registry.address";
 
@@ -64,7 +66,12 @@ public class RegistryContainer implements Container {
     
     private static RegistryContainer INSTANCE = null;
     
-    public RegistryContainer() {
+    @Override
+	public void afterPropertiesSet() throws Exception {
+		this.start();
+	}
+
+	public RegistryContainer() {
         INSTANCE = this;
     }
     
