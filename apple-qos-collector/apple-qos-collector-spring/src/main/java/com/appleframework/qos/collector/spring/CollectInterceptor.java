@@ -7,7 +7,8 @@ import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.util.PatternMatchUtils;
 
-import com.appleframework.exception.ServiceException;
+import com.appleframework.exception.AppleException;
+import com.appleframework.exception.ServiceUnavailableException;
 import com.appleframework.qos.collector.core.CollectApi;
 import com.appleframework.qos.collector.core.LoggerInit;
 import com.appleframework.qos.collector.core.utils.ApplicationUtils;
@@ -46,12 +47,14 @@ public class CollectInterceptor implements MethodInterceptor {
 			Object result = method.proceed(); // 让调用链往下执行
 			collect(method, start, false, "0");
 			return result;
-		} catch (ServiceException e) {
+		} catch (AppleException e) {
+			boolean error = false;
+			if(e instanceof ServiceUnavailableException) {
+				error = true;
+			}
 			String code = e.getCode();
-			boolean error = true;
     		if(null == code) {
     			code = "0";
-    			error = false;
     		}
 			collect(method, start, error, code);
 			throw e;
@@ -87,8 +90,7 @@ public class CollectInterceptor implements MethodInterceptor {
 		String application = ApplicationUtils.getApplicationName();
 		//String service = methodInvocation.getMethod().getDeclaringClass().getName();// 获取服务名称
 		String service = methodInvocation.getThis().getClass().getCanonicalName();
-		//int index = service.indexOf("$$");
-		int index = service.indexOf("\u0024\u0024");
+		int index = service.indexOf("$$");
 		if(index  > -1) {
 			service = service.substring(0, index);
 		}
