@@ -10,6 +10,7 @@ import com.alibaba.dubbo.common.utils.NetUtils;
 import com.alibaba.dubbo.rpc.*;
 import com.alibaba.dubbo.rpc.support.RpcUtils;
 import com.appleframework.exception.AppleException;
+import com.appleframework.exception.ServiceUnavailableException;
 import com.appleframework.qos.collector.core.CollectApi;
 import com.appleframework.qos.collector.core.URL;
 import com.appleframework.qos.collector.core.utils.DateFormatUtils;
@@ -42,9 +43,13 @@ public class CollectFilter implements Filter {
                 //collect(invoker, invocation, result, context, start, false, "0");
                 if(result.hasException()) {
                 	if(result.getException() instanceof AppleException ) {
+                		boolean error = false;
+                		if(result.getException() instanceof ServiceUnavailableException ) {
+                			error = true;
+                		}
                 		AppleException e = (AppleException)result.getException();
                 		String code = e.getCode();
-                		collect(invoker, invocation, result, context, start, false, null == code ?"0":code);
+                		collect(invoker, invocation, result, context, start, error, null == code ?"0":code);
                 	}
                 	else {
                 		collect(invoker, invocation, result, context, start, true, String.valueOf(RpcException.BIZ_EXCEPTION + 1));
