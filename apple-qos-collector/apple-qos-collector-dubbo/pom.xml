@@ -6,12 +6,12 @@
 	<parent>
 		<artifactId>apple-qos-collector</artifactId>
 		<groupId>com.appleframework.qos</groupId>
-		<version>0.0.5.RELEASE</version>
+		<version>0.0.6.RELEASE</version>
 	</parent>
 	<artifactId>apple-qos-collector-dubbo</artifactId>
 	<name>apple-qos-collector-dubbo</name>
 	<url>http://mvnrepo.appleframework.com</url>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -35,6 +35,12 @@
 					<artifactId>spring</artifactId>
 				</exclusion>
 			</exclusions>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.appleframework</groupId>
+			<artifactId>apple-exception</artifactId>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>

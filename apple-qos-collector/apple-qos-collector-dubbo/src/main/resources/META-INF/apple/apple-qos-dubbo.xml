@@ -8,6 +8,6 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 	
- 	<dubbo:annotation package="com.appleframework.qos.collector.dubbo"/>
-		
+ 	<dubbo:annotation package="com.appleframework.qos.collector.dubbo" />
+	    
 </beans>
