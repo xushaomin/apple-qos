@@ -10,12 +10,11 @@ import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import com.appleframework.config.core.PropertyConfigurer;
-import com.appleframework.qos.collector.core.utils.Constants;
+import com.appleframework.qos.collector.core.utils.ApplicationUtils;
 import com.appleframework.qos.collector.core.utils.DateFormatUtils;
+import com.appleframework.qos.collector.core.utils.SystemPropertiesUtils;
 
 /**
- * 
  * 
  * logger初始化，把日志输出到应用的目录里
  * 
@@ -32,9 +31,9 @@ public class LoggerInit {
     
     public static long logFileGenStartTime = 0;
     
-    public static long logFileGenHour = 1;
+    public static int logFileGenHour = 1;
     
-    public static long logFileGenDay  = 2;
+    public static int logFileGenDay  = 2;
     
     public static String LOG_FILE_GEN_TYPE_KEY = "log.file.gen.type";
     
@@ -47,7 +46,7 @@ public class LoggerInit {
     //一天86400000
 	//一分钟 60000
     public static long logFileGenHourInterval = 3600000; //1小时日志产生时间间隔 单位毫秒
-    public static long logFileGenDayInterval = 86400000; //1天日志产生时间间隔 单位毫秒
+    public static long logFileGenDayInterval  = 86400000; //1天日志产生时间间隔 单位毫秒
     
     public static int logFileGenType = 2; //小时为单位 1为小时 2为天 默认为天
        
@@ -77,14 +76,19 @@ public class LoggerInit {
             
         	Date now = new Date();
         	String datePattern = DateFormatUtils.pattern8;
-        	Integer logFileGenTypeP = PropertyConfigurer.getInteger(LOG_FILE_GEN_TYPE_KEY);
-        	if(null != logFileGenTypeP && logFileGenTypeP == logFileGenHour) {
+        	int logFileGenTypeP = logFileGenDay;
+        	
+        	String logFileGenType = SystemPropertiesUtils.getString(LOG_FILE_GEN_TYPE_KEY);
+        	if(null != logFileGenType) {
+        		logFileGenTypeP = Integer.parseInt(logFileGenType);
+        	}
+        	if(logFileGenTypeP == logFileGenHour) {
         		datePattern = "yyyyMMddHH";
         		logFileGenIntervalTime = logFileGenHourInterval;
         	}
         	
         	String strDate = DateFormatUtils.toString(now, datePattern);
-        	String application = PropertyConfigurer.getString(Constants.APPLICATION_NAME);
+        	String application = ApplicationUtils.getApplicationName();
         	logFileGenStartTime =  DateFormatUtils.toDate(strDate, datePattern).getTime();
             // 使缺省的配置生效(Logger, Appender)
             PropertyConfigurator.configure(defaultProperties);
@@ -126,14 +130,13 @@ public class LoggerInit {
     }
     
     private static String getLogFileGenPath() {
-        String path = PropertyConfigurer.getString(LOG_FILE_GEN_PATH_KEY);
+        String path = SystemPropertiesUtils.getString(LOG_FILE_GEN_PATH_KEY);
         if(null == path) {
         	return LOG_FILE_GEN_DEFAULT_PATH;
         }
         else {
         	return path;
         }
-        
     }
     
     

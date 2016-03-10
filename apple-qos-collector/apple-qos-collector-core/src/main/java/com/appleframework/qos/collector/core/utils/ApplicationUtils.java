@@ -3,24 +3,17 @@ package com.appleframework.qos.collector.core.utils;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import com.appleframework.config.core.PropertyConfigurer;
-
 public class ApplicationUtils {
 
 	public static String APPLICATION_NAME_KEY = "application.name";
 
 	public static String getApplicationName() {
-		String name = PropertyConfigurer.getString(APPLICATION_NAME_KEY);
+		String name = SystemPropertiesUtils.getString(APPLICATION_NAME_KEY);
 		if (null == name) {
-			name = SystemPropertiesUtils.getString(APPLICATION_NAME_KEY);
-			if (null == name) {
-				try {
-					return InetAddress.getLocalHost().getHostName();
-				} catch (UnknownHostException e) {
-					return null;
-				}
-			} else {
-				return name;
+			try {
+				return InetAddress.getLocalHost().getHostName();
+			} catch (UnknownHostException e) {
+				return null;
 			}
 		} else {
 			return name;
