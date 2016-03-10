@@ -35,12 +35,11 @@ public class CollectFilter implements Filter {
 	
 	// 调用过程拦截
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-        //if (invoker.getUrl().hasParameter(Constants.MONITOR_KEY)) {
+    	if(com.appleframework.qos.collector.core.utils.Constants.COLLECT_START == true) {
             RpcContext context = RpcContext.getContext(); // 提供方必须在invoke()之前获取context信息
             long start = System.currentTimeMillis(); // 记录起始时间戮
             try {
                 Result result = invoker.invoke(invocation); // 让调用链往下执行
-                //collect(invoker, invocation, result, context, start, false, "0");
                 if(result.hasException()) {
                 	if(result.getException() instanceof AppleException ) {
                 		boolean error = false;
@@ -63,9 +62,9 @@ public class CollectFilter implements Filter {
                 collect(invoker, invocation, null, context, start, true, String.valueOf(e.getCode() + 1));
                 throw e;
             }
-        //} else {
-        //    return invoker.invoke(invocation);
-        //}
+        } else {
+            return invoker.invoke(invocation);
+        }
     }
     
     // 信息采集
