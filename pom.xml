@@ -69,13 +69,11 @@
 				<version>${boot.version}</version>
 			</dependency>
 			
-			<!-- 
 			<dependency>
 				<groupId>com.appleframework.config</groupId>
 				<artifactId>apple-config-diamond</artifactId>
 				<version>${config.version}</version>
 			</dependency>
-			 -->
 			
 			<dependency>
 				<groupId>com.appleframework.jms</groupId>
