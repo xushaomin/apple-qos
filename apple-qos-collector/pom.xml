@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>apple-qos</artifactId>
 		<groupId>com.appleframework.qos</groupId>
-		<version>0.0.5.RELEASE</version>
+		<version>0.0.6.RELEASE</version>
 	</parent>
 	<artifactId>apple-qos-collector</artifactId>
 	<name>apple-qos-collector</name>

@@ -6,7 +6,7 @@
 	<parent>
 		<artifactId>apple-qos-collector</artifactId>
 		<groupId>com.appleframework.qos</groupId>
-		<version>0.0.5.RELEASE</version>
+		<version>0.0.6.RELEASE</version>
 	</parent>
 	<artifactId>apple-qos-collector-spring</artifactId>
 	<name>apple-qos-collector-spring</name>
@@ -32,15 +32,24 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.appleframework</groupId>
+			<artifactId>apple-exception</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>
