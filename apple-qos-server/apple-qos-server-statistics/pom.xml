@@ -22,6 +22,12 @@
 		<dependency>
 			<groupId>com.appleframework</groupId>
 			<artifactId>apple-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.validation</groupId>
+    				<artifactId>validation-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		
 		<dependency>
@@ -82,10 +88,23 @@
 		  <version>2.6.0</version>
 		</dependency>
 		
+		<!-- 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>5.2.2.Final</version>
+			<version>5.2.4.Final</version>
+		</dependency>
+				
+		<dependency>
+			<groupId>javax.validation</groupId>
+    		<artifactId>validation-api</artifactId>
+    		<version>1.1.0.Final</version>
+		</dependency>
+		 -->
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
 		</dependency>
 		
 		<dependency>
@@ -101,6 +120,22 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.6.2</version>
 		</dependency>
 
 	</dependencies>
