@@ -18,7 +18,6 @@ import com.appleframework.qos.server.core.entity.AppInfo;
 import com.appleframework.qos.server.statistics.service.AppInfoService;
 import com.appleframework.web.springmvc.controller.BaseController;
 
-
 @Controller
 @RequestMapping("/app_info")
 public class AppInfoController extends BaseController {
