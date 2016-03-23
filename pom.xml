@@ -246,11 +246,11 @@
 			<distributionManagement>
 				<repository>
 					<id>nexus-releases</id>
-					<url>http://mvnrepo.appleframework.com/nexus/content/repositories/releases/</url>
+					<url>http://mvnrepo.appleframework.com:8081/nexus/content/repositories/releases/</url>
 				</repository>
 				<snapshotRepository>
 					<id>nexus-snapshots</id>
-					<url>http://mvnrepo.appleframework.com/nexus/content/repositories/snapshots/</url>
+					<url>http://mvnrepo.appleframework.com:8081/nexus/content/repositories/snapshots/</url>
 				</snapshotRepository>
 			</distributionManagement>
 		</profile>
