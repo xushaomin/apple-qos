@@ -22,12 +22,6 @@
 		<dependency>
 			<groupId>com.appleframework</groupId>
 			<artifactId>apple-web</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.validation</groupId>
-    				<artifactId>validation-api</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		
 		<dependency>
@@ -70,6 +64,7 @@
 			<artifactId>aspectjweaver</artifactId>
 		</dependency>
 		
+		<!-- 
 		<dependency>
 		  <groupId>com.fasterxml.jackson.core</groupId>
 		  <artifactId>jackson-core</artifactId>
@@ -86,19 +81,6 @@
 		  <groupId>com.fasterxml.jackson.core</groupId>
 		  <artifactId>jackson-annotations</artifactId>
 		  <version>2.6.0</version>
-		</dependency>
-		
-		<!-- 
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>5.2.4.Final</version>
-		</dependency>
-				
-		<dependency>
-			<groupId>javax.validation</groupId>
-    		<artifactId>validation-api</artifactId>
-    		<version>1.1.0.Final</version>
 		</dependency>
 		 -->
 		
