@@ -19,9 +19,11 @@
 
 	<context:component-scan base-package="com.appleframework.qos.server.statistics" />
 	
-<mvc:annotation-driven validator="validator" />
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+
+	<mvc:annotation-driven validator="validator" />
 	
-		<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
 
 	<bean id="viewNameTranslator" class="org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator" />
 	
@@ -178,6 +180,5 @@
 		<property name="maxUploadSize" value="9000000000000" />
 	</bean>
 	
-	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 	
 </beans>
