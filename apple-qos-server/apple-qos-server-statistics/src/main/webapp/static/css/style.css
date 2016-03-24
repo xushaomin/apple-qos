@@ -121,7 +121,7 @@
 .unfold_ico_up{ background-position:-97px -191px;}
 .unfold_ico_down{ background-position:-82px -191px;}
 
-table.list .desc, table.list .desc:hover {background: url(../images/list.gif) right -120px no-repeat;}
+table.list .desc, table.list .desc:hover {background: url(../images/list_desc.gif) right -120px no-repeat;}
 table.list .asc, table.list .asc:hover {background: url(../images/list.gif) right -150px no-repeat;}
 
 .table_list2{ table-layout:auto; width:686px;}
