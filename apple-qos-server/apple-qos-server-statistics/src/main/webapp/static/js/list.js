@@ -21,7 +21,7 @@ $().ready( function() {
 	var $sort = $("#listTable th.sort");
 	var $pageSize = $("#pageSize");
 	var $searchProperty = $("#searchProperty");
-	var $orderProperty = $("#orderProperty");
+	var $orderField = $("#orderField");
 	var $orderDirection = $("#orderDirection");
 	var $pageNumber = $("#pageNumber");
 	
@@ -161,25 +161,23 @@ $().ready( function() {
 	
 	// 排序
 	$sort.click( function() {
-		var orderProperty = $(this).attr("name");
-		if ($orderProperty.val() == orderProperty) {
-			if ($orderDirection.val() == "asc") {
-				$orderDirection.val("desc");
-			} else {
-				$orderDirection.val("asc");
-			}
+		var orderField = $(this).attr("name");
+		$orderField.val(orderField);
+		
+		if ($orderDirection.val() == "asc") {
+			$orderDirection.val("desc");
 		} else {
-			$orderProperty.val(orderProperty);
 			$orderDirection.val("asc");
 		}
+		
 		$pageNumber.val("1");
 		$listForm.submit();
 		return false;
 	});
 	
 	// 排序图标
-	if ($orderProperty.val() != "") {
-		$sort = $("#listTable a[name='" + $orderProperty.val() + "']");
+	if ($orderField.val() != "") {
+		$sort = $("#listTable th[name='" + $orderField.val() + "']");
 		if ($orderDirection.val() == "asc") {
 			$sort.removeClass("desc").addClass("asc");
 		} else {

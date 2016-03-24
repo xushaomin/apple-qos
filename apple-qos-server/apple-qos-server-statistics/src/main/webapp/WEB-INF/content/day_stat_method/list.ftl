@@ -53,6 +53,8 @@
 <div class="con_right_main">
 
 	<form id="listForm" action="list" method="post">
+	<input type="hidden" id="orderField" name="orderField" value="${(se.orderField)!'total_succ_per'}" />
+	<input type="hidden" id="orderDirection" name="orderDirection" value="${(se.orderDirection)!'asc'}" />
 	
     <!-- start of con_search -->
 	<div class="con_search">
@@ -100,22 +102,22 @@
         <tr>
         	<th width="5%" >序号</th>
         	
-        	<th width="10%" orderField="longitude">调用方</th>
-        	<th width="10%" orderField="longitude">服务方</th>
+        	<th width="10%" class="sort" name="consumer_app_name">调用方</th>
+        	<th width="10%" class="sort" name="provider_app_naame">服务方</th>
         	
-        	<th width="12%" orderField="longitude">服务</th>
-        	<th width="12%" orderField="longitude">方法</th>
+        	<th width="12%" class="sort" name="service">服务</th>
+        	<th width="12%" class="sort" name="method">方法</th>
         	
-        	<th width="8%" orderField="longitude">发生时间</th>
+        	<th width="8%" class="sort" name="stat_date">发生时间</th>
         	
-        	<th width="6%" orderField="longitude">总次数</th>
-        	<th width="6%" orderField="longitude">失败次数</th>
-        	<th width="6%" orderField="longitude">成功率%</th>
+        	<th width="6%" class="sort" name="total_sum_number">总次数</th>
+        	<th width="6%" class="sort" name="fail_sum_number">失败次数</th>
+        	<th width="6%" class="sort" name="total_succ_per" orderDirection="asc">成功率%</th>
         	
-			<th width="6%" orderField="longitude">总平均<br />耗时</th>
-			<th width="6%" orderField="longitude">成功<br />均耗时</th>
-			<th width="6%" orderField="longitude">失败<br />均耗时</th>
-			<th width="6%" orderField="longitude">成功<br />最大耗时</th>
+			<th width="6%" class="sort" name="total_avg_elapsed" orderDirection="desc">总平均<br />耗时</th>
+			<th width="6%" class="sort" name="succ_avg_elapsed"  orderDirection="desc">成功<br />均耗时</th>
+			<th width="6%" class="sort" name="fail_avg_elapsed"  orderDirection="desc">失败<br />均耗时</th>
+			<th width="6%" class="sort" name="succ_max_elapsed"  orderDirection="desc">成功<br />最大耗时</th>
 			
         </tr>
         <#list page.list as info>
