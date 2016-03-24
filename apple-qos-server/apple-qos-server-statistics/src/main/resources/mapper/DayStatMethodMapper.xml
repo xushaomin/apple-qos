@@ -179,7 +179,7 @@
 		) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;
 	</update>
 	
-	<select id="findPage" resultMap="baseResultMap" parameterType="com.appleframework.orm.mybatis.query.PageQuery">
+	<select id="findPage" resultMap="baseResultMap">
 		select 
 			<include refid="baseColumnList" /> 
 		from 
@@ -187,27 +187,45 @@
 		where 
 			1=1
 			
-			<if test="startDate!=null">  
-            	and stat_date &gt;= #{startDate, jdbcType=TIMESTAMP} 
+			<if test="so.startDate!=null">  
+            	and stat_date &gt;= #{so.startDate, jdbcType=TIMESTAMP} 
          	</if>
-         	<if test="endDate!=null">  
-            	and stat_date &lt;= #{endDate, jdbcType=TIMESTAMP} 
-         	</if>
-         	
-         	<if test="consumerAppName!=null">  
-            	and consumer_app_name like '%${consumerAppName}%' 
-         	</if>
-         	<if test="providerAppName!=null">  
-            	and provider_app_name like '%${providerAppName}%' 
+         	<if test="so.endDate!=null">  
+            	and stat_date &lt;= #{so.endDate, jdbcType=TIMESTAMP} 
          	</if>
          	
-         	<if test="service!=null">  
-            	and service like '%${service}%' 
+         	<if test="so.consumerAppName!=null">  
+            	and consumer_app_name like '%${so.consumerAppName}%' 
          	</if>
-         	<if test="method!=null">  
-            	and method like '%${method}%' 
+         	<if test="so.providerAppName!=null">  
+            	and provider_app_name like '%${so.providerAppName}%' 
          	</if>
          	
-         	order by total_succ_per asc, stat_date asc
+         	<if test="so.service!=null">  
+            	and service like '%${so.service}%' 
+         	</if>
+         	<if test="so.method!=null">  
+            	and method like '%${so.method}%' 
+         	</if>
+         	
+         	order by 
+         	<choose>
+				<when test="se.orderField != null and se.orderField != ''">
+					${se.orderField}
+				</when>
+				<otherwise>
+					total_succ_per
+				</otherwise>
+			</choose>
+			
+			<choose>
+				<when test="se.orderDirection != null and se.orderDirection != ''">
+					${se.orderDirection}
+				</when>
+				<otherwise>
+					asc
+				</otherwise>
+			</choose>
+         	
 	</select>
 </mapper>

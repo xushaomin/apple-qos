@@ -8,11 +8,12 @@ import javax.annotation.Resource;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import com.appleframework.model.Search;
 import com.appleframework.model.page.Pagination;
 import com.appleframework.orm.mybatis.query.MapQuery;
-import com.appleframework.orm.mybatis.query.PageQuery;
 import com.appleframework.qos.server.core.entity.DayStatMethod;
 import com.appleframework.qos.server.statistics.dao.DayStatMethodDao;
+import com.appleframework.qos.server.statistics.model.DayStatMethodSo;
 import com.appleframework.qos.server.statistics.service.DayStatMethodService;
 
 @Service("dayStatMethodService")
@@ -48,17 +49,8 @@ public class DayStatMethodServiceImpl implements DayStatMethodService {
 		return dayStatMethodDao.getByDate(query);
 	}
 	
-	public Pagination findPage(Pagination page, 
-			Date startDate,  Date endDate,
-			String consumerAppName, String providerAppName, String service, String method) {
-		PageQuery param = PageQuery.create(page);
-		param.put("consumerAppName", consumerAppName);
-		param.put("providerAppName", providerAppName);
-		param.put("service", service);
-		param.put("method", method);
-		param.put("startDate", startDate);
-		param.put("endDate", endDate);
-		page.setList(dayStatMethodDao.findPage(param));
+	public Pagination findPage(Pagination page, DayStatMethodSo so, Search se) {
+		page.setList(dayStatMethodDao.findPage(page, so, se));
 		return page;
 	}
 	
